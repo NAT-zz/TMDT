@@ -57,7 +57,7 @@ def detail():
     return render_template('item-detail.html',
                             this_product = product,
                             similar_products = similar_products)
-
+#sdf
 @app.route("/product-list")
 def product_list():
     brand_id = request.args.get("brand-id")
