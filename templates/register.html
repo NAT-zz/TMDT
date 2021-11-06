@@ -1,0 +1,39 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}TRANG DANG KI{% endblock %}
+
+{% block content %}
+<h1 class ="text-center text-danger">DANG KI NGUOI DUNG</h1>
+
+{% if err_msg %}
+  <div class = "alert alert-danger">
+    {{ err_msg }}
+  </div>
+{% endif %}
+<!-- multipart/form-data: dùng để gởi tập tin lên -->
+<form method="post" enctype="multipart/form-data">
+  <div class="form-group">
+    <label for="Name">Name:</label> 
+    <input type="text" name = "name" class="form-control" placeholder="Nhập Name" id="name" required>
+  </div>
+  <div class="form-group">
+    <label for="username">Username:</label> 
+    <input type="text" name = "username" class="form-control" placeholder="Nhập Username" id="username" required>
+  </div>
+  <div class="form-group">
+    <label for="pwd">Password:</label>
+    <input type="password" name = "password" class="form-control" placeholder="Nhập password" id="password" required>
+  </div>
+  <div class="form-group">
+    <label for="confirm-password">Confirm Password:</label>
+    <input type="password" name = "confirm-password" class="form-control" placeholder = "Enter password again" id="confirm-password">
+  </div>
+  <div class="form-group">
+    <label for="avatar">Avatar:</label>
+    <input type="file" name = "avatar" class="form-control" id="avatar">
+  </div>
+
+  <button type="Submit" class="btn btn-primary btn-danger">DANG KI</button>
+</form>   
+
+{% endblock %}

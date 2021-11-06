@@ -1,0 +1,55 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}TRANG GIO HANG{% endblock %}
+
+{% block content %}
+<h1 class ="text-center text-info">THONG TIN GIO HANG</h1>
+<table class = "table">
+    <tr>
+        <th>Ma san pham</th>
+        <th>Ten san pham</th>
+        <th>Don gia</th>
+        <th>So luong</th>
+        <th></th>
+    </tr>
+    {% if not session.get('cart') %}
+    <tr>
+        <td colspan="5">Khong co san pham nao trong gio!!!</td>
+    </tr>
+    {% else %}
+    {% for item in session['cart'].values() %}
+    <tr id = "product{{ item.product_id }}">
+        <td>{{ item.product_id }}</td>
+        <td>{{ item.product_name }}</td>
+        <td>{{ item.product_price }}</td>
+        <td>
+            <input type="number" 
+            value= "{{ item.quantity }}" 
+            onblur= "updateCartItem(this, {{ item.product_id }})"
+            class = "form-control">
+            <!-- this = nguyên thẻ input này-->
+        </td>
+        <td>
+            <input type="button" value="Xoa" class = "btn btn-danger"
+            ONclick= "deleteCartItem({{ item.product_id }})">
+        </td>
+    </tr>   
+    {% endfor %}
+    {% endif %}
+</table>
+{% if session.get('cart') %}
+<div class="alert alrt-infor">
+        <ul>
+            <li><h3>So san pham: <span id = "cart_quantity">{{ cart_stats.total_quantity }}</span></h3></li>
+            <li><h3>Tong tien hoa don: <span id = "cart_amount">{{ cart_stats.total_amount }}</span> VND</h3></li>
+        </ul>
+</div>
+<div>
+    {% if current_user.is_authenticated %}
+        <input type="button" onclick = "pay()" value = "Thanh toan" class = "btn btn-success">
+    {% else %}
+        <a href="/user-login?next=/cart">DANG NHAP DE THANH TOAN</a>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,145 @@
+{% extends "layout/base.html" %}
+{% block content %}
+    <div class="title-wrapper" style="background-image: url(/static/images/product-showcase.jpg);height: 350px;">
+      <div class="container">
+        <div class="container-inner">
+          <h1><span>LAPTOP</span> CATEGORY</h1>
+          <em>The Best Laptops Only</em>
+        </div>
+      </div>
+    </div>
+
+    <div class="main">
+      <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="/product-list">Home</a></li>
+            <li><a href="">Store</a></li>
+            <li class="active">Products</li>
+        </ul>
+        <!-- BEGIN SIDEBAR & CONTENT -->
+        <div class="row margin-bottom-40">
+          <!-- BEGIN SIDEBAR -->
+          <div class="sidebar col-md-3 col-sm-5">
+            <ul class="list-group margin-bottom-25 sidebar-menu">
+              {% for b in brand %}
+                <li class="list-group-item clearfix {{ 'active' if b.id|int == bid|int else ' ' }}"><a href="/product-list?brand-id={{b.id}}"><i class="fa fa-angle-right"></i>{{b.name}} : {{ count_productbybid(b.id) }}</a></li>
+              {% endfor %}
+            </ul>
+
+            <div class="sidebar-filter margin-bottom-25">
+              <h2>Filter</h2>
+              <h3>Availability</h3>
+              <div class="checkbox-list">
+                <label><input type="checkbox"> Not Available (3)</label>
+                <label><input type="checkbox"> In Stock (26)</label>
+              </div>
+
+              <h3>Price</h3>
+              <p>
+                <label for="amount">Range:</label>
+                <input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;">
+              </p>
+              <div id="slider-range"></div>
+            </div>
+
+            <div class="sidebar-products clearfix">
+              <h2>Bestsellers</h2>
+              {% for p in bestseller_products[:3] %}
+              <div class="item">
+                <a href="/item-detail?product-id={{ p.id }}"><img src="{{p.image}}" alt="Some Shoes in Animal with Cut Out"></a>
+                <h3><a href="/item-detail?product-id={{ p.id }}">{{p.name}}</a></h3>
+                <div class="price">${{p.price}}</div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          <!-- END SIDEBAR -->
+          <!-- BEGIN CONTENT -->
+          <div class="col-md-9 col-sm-7">
+            {% if kw %}
+            <div class="content-search margin-bottom-20">
+              <div class="row">
+                <div class="col-md-6">
+                  <h1>Search result for <em>{{kw}}</em></h1>
+                </div>
+                <div class="col-md-6">
+                  <form action="/product-list">
+                    <div class="input-group">
+                      <input type="text" placeholder="Search again" class="form-control" name = "kw">
+                      <span class="input-group-btn">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                      </span>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+            <div class="row list-view-sorting clearfix">
+              <div class="col-md-2 col-sm-2 list-view">
+                <a href="#"><i class="fa fa-th-large"></i></a>
+                <a href="#"><i class="fa fa-th-list"></i></a>
+              </div>
+              <div class="col-md-10 col-sm-10">
+                <div class="pull-right">
+                  <label class="control-label">Sort&nbsp;By:</label>
+                  <select class="form-control input-sm" onchange="location = this.value;">
+                    <option value="/product-list" selected>Default</a></option>
+                    <option value="/product-list?sort=lowtohigh">Price (Low &gt; High)</option>
+                    <option value="/product-list?sort=hightolow">Price (High &gt; Low)</a></option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <!-- BEGIN PRODUCT LIST -->
+            <div class="row product-list">
+            {% if not all_products %}
+            <div class = "alert"><img src="/static/images/no-product.jpg" style="margin-left: 25%; " alt=""></div>
+            {% endif %}
+            {% for p in all_products %}
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="product-item">
+                  <div class="pi-img-wrapper">
+                    <img src="{{p.image}}" class="img-responsive" alt="Berry Lace Dress">
+                    <div>
+                        <a href="{{p.image}}" class="btn btn-default fancybox-button">Zoom</a>
+                        <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
+                    </div>
+                  </div>
+                  <h3><a href="/item-detail?product-id={{ p.id }}">{{p.name}}</a></h3>
+                  <div class="pi-price">${{p.price}}</div>
+                  <a href="#" class="btn btn-default add2cart">Add to cart</a>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+            <!-- END PRODUCT LIST -->
+            <!-- BEGIN PAGINATOR -->
+            <div class="row">
+              <div class="col-md-4 col-sm-4 items-info">Items 1 to 9 of {{total_product_count}} total</div>
+              <div class="col-md-8 col-sm-8">
+                <ul class="pagination pull-right">
+                 
+                  {% if page|int > 1 %}
+                  <li><a href="{% if bid %}/product-list?brand-id={{bid}}&page={{ page-1 }}{% else %}/product-list?page={{page-1}}{% endif %}">&laquo;</a></li>
+                  {% endif %}
+
+                  {% for i in range(1, pagenum+1) %}
+                    <li class="page-item {{'active' if page|int == i else ' '}}"><a class="page-link" href="{% if bid %}/product-list?brand-id={{bid}}&page={{ i }}{% else %}/product-list?page={{i}}{% endif %}">{{ i }}</a></li>
+                  {% endfor %}
+
+                  {% if page|int < pagenum|int %}
+                  <li><a href="{% if bid %}/product-list?brand-id={{bid}}&page={{ page+1 }}{% else %}/product-list?page={{page+1}}{% endif %}">&raquo;</a></li>
+                  {% endif %}
+                  
+                </ul>
+              </div>
+            </div>
+            <!-- END PAGINATOR -->
+          </div>
+          <!-- END CONTENT -->
+        </div>
+        <!-- END SIDEBAR & CONTENT -->
+      </div>
+    </div>
+{% endblock %}
