@@ -29,7 +29,7 @@ def login_execute():
         if user.role == MyRole.ADMIN:
             login_user(user)
     return redirect("/admin")
-   
+
 @app.route("/user-login", methods = ["POST", "GET"])
 def normaluser_login():
     err_msg = ""
