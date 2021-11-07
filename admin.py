@@ -5,12 +5,12 @@ from flask_login import current_user, logout_user
 
 from __init__ import admin, db
 from models import*
+import models
 
 
 class AuthenticatedView(ModelView):
     def is_accessible(self):
-        return current_user.is_authenticated
-
+        return current_user.is_authenticated and current_user.role == MyRole.ADMIN
 class LogoutView(BaseView):
     @expose('/')
     def index(self):
