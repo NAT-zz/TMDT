@@ -53,6 +53,33 @@ def get_product(kw=None, brand_id=None, page = None, sort = None):
         return products.all()[start:end]
     return products.all()
 
+def add_user(fullname, username, phone, email, password): 
+    get_user = Users.query.filter(Users.username == username).all()
+    if not get_user:
+        user = Users(name = fullname, 
+                    username = username, 
+                    password = password,
+                    phone = phone,
+                    email = email)
+        db.session.add(user)
+        try:
+            db.session.commit()
+            return True      
+        except:
+            return False
+    else:
+        return False
+def change_password(username, oldpassword, newpassword):
+    get_user = Users.query.filter(Users.username == username, Users.password==oldpassword).first()
+    if get_user:
+        get_user.password = newpassword
+        try:
+            db.session.commit()
+            return True      
+        except:
+            return False
+    else:
+        return False
 
 
 # # Thống kê cart
@@ -85,18 +112,6 @@ def get_product(kw=None, brand_id=None, page = None, sort = None):
 #         return True 
     
 #     return False
-
-# def add_user(name, username, password, avatar=None): 
-#     password = str(hashlib.md5(password.encode("utf-8")).digest())
-#     user = User(name = name, username = username, 
-#             password = password,
-#             avatar = avatar)
-#     db.session.add(user)
-#     try:
-#         db.session.commit()
-#         return True
-#     except:
-#         return False
 
 
 

@@ -30,7 +30,7 @@
           <div class="col-md-6 col-sm-6 additional-nav">
               <ul class="list-unstyled list-inline pull-right">
                 {% if current_user.is_authenticated %}
-                  <li><a href="shop-account.html">My Account</a></li>
+                  <li><a href="/user-account">My Account</a></li>
                   <li><a href="/user-logout">Log Out</a></li>
                 {% else %}
                   <li><a href="/user-login">Log In</a></li>
@@ -54,17 +54,19 @@
   <!-- BEGIN CART -->
   {% if current_user.is_authenticated %}
   <div class="top-cart-block">
-    <li><a href="" onclick="return false;">{{current_user.name}}</a></li>
+    <li style="color: red;" >{{current_user.name}}</li>
    
     <div class="top-cart-info">
       <a href="javascript:void(0);" class="top-cart-info-count">3 items</a>
       <a href="javascript:void(0);" class="top-cart-info-value">$1260</a>
     </div>
-    <i class="fa fa-shopping-cart"></i>
-                  
+
+    <i class="fa fa-shopping-cart" style="position: relative;"></i>
+    
     <div class="top-cart-content-wrapper">
       <div class="top-cart-content">
         <ul class="scroller" style="height: 250px;">
+
           <li>
             <a href="shop-item.html"><img src="{{ url_for('static', filename = 'styles/assets/frontend/pages/img/cart-img.jpg') }}" alt="Rolex Classic Watch" width="37" height="34"></a>
             <span class="cart-content-count">x 1</span>
@@ -72,55 +74,7 @@
             <em>$1230</em>
             <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
           </li>
-          <li>
-            <a href="shop-item.html"><img src="{{ url_for('static', filename = 'styles/assets/frontend/pages/img/cart-img.jpg') }}" alt="Rolex Classic Watch" width="37" height="34"></a>
-            <span class="cart-content-count">x 1</span>
-            <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-            <em>$1230</em>
-            <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-          </li>
-          <li>
-            <a href="shop-item.html"><img src="{{ url_for('static', filename = 'styles/assets/frontend/pages/img/cart-img.jpg') }}" alt="Rolex Classic Watch" width="37" height="34"></a>
-            <span class="cart-content-count">x 1</span>
-            <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-            <em>$1230</em>
-            <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-          </li>
-          <li>
-            <a href="shop-item.html"><img src="{{ url_for('static', filename = 'styles/assets/frontend/pages/img/cart-img.jpg') }}" alt="Rolex Classic Watch" width="37" height="34"></a>
-            <span class="cart-content-count">x 1</span>
-            <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-            <em>$1230</em>
-            <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-          </li>
-          <li>
-            <a href="shop-item.html"><img src="{{ url_for('static', filename = 'styles/assets/frontend/pages/img/cart-img.jpg') }}" alt="Rolex Classic Watch" width="37" height="34"></a>
-            <span class="cart-content-count">x 1</span>
-            <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-            <em>$1230</em>
-            <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-          </li>
-          <li>
-            <a href="shop-item.html"><img src="{{ url_for('static', filename = 'styles/assets/frontend/pages/img/cart-img.jpg') }}" alt="Rolex Classic Watch" width="37" height="34"></a>
-            <span class="cart-content-count">x 1</span>
-            <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-            <em>$1230</em>
-            <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-          </li>
-          <li>
-            <a href="shop-item.html"><img src="{{ url_for('static', filename = 'styles/assets/frontend/pages/img/cart-img.jpg') }}" alt="Rolex Classic Watch" width="37" height="34"></a>
-            <span class="cart-content-count">x 1</span>
-            <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-            <em>$1230</em>
-            <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-          </li>
-          <li>
-            <a href="shop-item.html"><img src="{{ url_for('static', filename = 'styles/assets/frontend/pages/img/cart-img.jpg') }}" alt="Rolex Classic Watch" width="37" height="34"></a>
-            <span class="cart-content-count">x 1</span>
-            <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-            <em>$1230</em>
-            <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-          </li>
+          
         </ul>
         <div class="text-right">  
           <a href="shop-shopping-cart.html" class="btn btn-default">View Cart</a>
@@ -189,10 +143,6 @@
       </li>
       <!-- END TOP SEARCH -->
     </ul>
-    <!-- {% if current_user.avatar %}
-              <img src="{{ current_user.avatar }}" width = "30px" class="rounded-circle">
-            {% endif %}
-            {{ current_user.username }} -->
   </div>
   <!-- END NAVIGATION -->
 </div>

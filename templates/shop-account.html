@@ -1,0 +1,42 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+<div class="main">
+  <div class="container">
+    <ul class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li><a href="/product-list">Store</a></li>
+        <li class="active">My Account Page</li>
+    </ul>
+    <!-- BEGIN SIDEBAR & CONTENT -->
+    <div class="row margin-bottom-40">
+      <!-- BEGIN SIDEBAR -->
+      <!-- END SIDEBAR -->
+
+      <!-- BEGIN CONTENT -->
+      <div class="col-md-9 col-sm-7">
+        <h1>My Account Page</h1>
+        <div class="content-page">
+          <h3>My Account</h3>
+          <ul>
+            <li><a href="/user-edit-account">Edit your account information</a></li>
+            <li><a href="/user-change-password">Change your password</a></li>
+            <li><a href="#">Modify your wish list</a></li>
+          </ul>
+          <hr>
+
+          <h3>My Orders</h3>
+          <ul>
+            <li><a href="#">View your order history</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- END CONTENT -->
+    </div>
+    <!-- END SIDEBAR & CONTENT -->
+  </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

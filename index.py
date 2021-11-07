@@ -1,4 +1,5 @@
 import re
+from threading import currentThread
 from flask import render_template, request, redirect, session, jsonify
 from flask_admin.base import Admin
 from sqlalchemy import util
@@ -32,20 +33,22 @@ def login_execute():
 
 @app.route("/user-login", methods = ["POST", "GET"])
 def normaluser_login():
-    err_msg = ""
-    if request.method == "POST":
-        username = request.form.get("username")
-        pwd = request.form.get("password")
+    if not current_user.is_authenticated:
+        err_msg = ""
+        if request.method == "POST":
+            username = request.form.get("username")
+            pwd = request.form.get("password")
 
-        user = Users.query.filter(Users.username == username, Users.password == pwd).first()
+            user = Users.query.filter(Users.username == username, Users.password == pwd).first()
 
-        if user:
-            login_user(user)
-            return redirect(request.args.get("next", "/"))
-        else:
-            err_msg = "Incorrect Username or Password"
+            if user:
+                login_user(user)
+                return redirect(request.args.get("next", "/"))
+            else:
+                err_msg = "Incorrect Username or Password"
 
-    return render_template("page-login.html", err_msg=err_msg)
+        return render_template("page-login.html", err_msg=err_msg)
+    return redirect("/")
     
 @app.route("/user-register", methods=["POST", "GET"])
 def register():
@@ -55,27 +58,67 @@ def register():
             password = request.form.get("password")    
             confirm_password = request.form.get("confirm-password")
             if password.strip() == confirm_password.strip():
-                avatar = request.files['avatar']
                 data = request.form.copy()
                 del data['confirm-password']
 
                 if utils.add_user(**data):
                     return redirect("/user-login")
                 else:
-                    err_msg = "Dữ liệu đầu vào không hợp lệ"
+                    err_msg = "Check your information again/Username might already exit"
             else:
-                err_msg = "Mật khẩu không khớp"
+                err_msg = "Password not match"
         except:
-            err_msg = "Hệ thống lỗi"
+            err_msg = "System error"
 
     return render_template("page-reg-page.html", err_msg = err_msg)
-
 
 @app.route("/user-logout")
 def normaluser_logout():
     logout_user()
     return redirect("/user-login")
 
+@app.route("/user-account")
+def normaluser_account():
+    if current_user.is_authenticated:
+        return render_template("shop-account.html")
+    return redirect("/")
+
+@app.route("/user-forget-password")
+def normaluer_forget_password():
+    if not current_user.is_authenticated:
+        return render_template("page-forgotton-password.html")
+    return redirect("/")
+
+@app.route("/user-edit-account")
+def normaluser_edit_account():
+    if current_user.is_authenticated:
+        return render_template("shop-standart-forms.html")
+    return redirect("/")
+
+@app.route("/user-change-password", methods=["POST", "GET"])
+def normaluser_change_password():
+    err_msg = ""
+    if request.method == 'POST':
+        try:
+            oldpassword = request.form.get("old-password")
+            newpassword = request.form.get("new-password")    
+            confirm_password = request.form.get("confirm-password")
+            username = current_user.username
+
+            if newpassword.strip() == confirm_password.strip():
+                if utils.change_password(username=username, 
+                                        oldpassword=oldpassword,
+                                        newpassword=newpassword):
+                    logout_user()
+                    return redirect("/user-login")
+                else:
+                    err_msg = "Check your information again"
+            else:
+                err_msg = "Password not match"
+        except:
+            err_msg = "System error"
+    return render_template("change-password.html", err_msg=err_msg)
+    
 @app.context_processor
 def common_context():
     # cart_stats = utils.cart_stats(session.get("cart"))
