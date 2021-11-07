@@ -126,7 +126,7 @@ admin.add_view(ReceiptModelView(Receipt, db.session, name = "Receipts"))
 admin.add_view(ReceiptDetailModelView(ReceiptDetail, db.session, name = "ReceiptDetail"))
 admin.add_view(ShipModelView(Ship, db.session, name = "Ship"))
 admin.add_view(IncomeModelView(Income, db.session, name = "Stats"))
-admin.add_view(LogoutView(name = "DangXuat"))
+admin.add_view(LogoutView(name = "LogOut"))
 
 
 

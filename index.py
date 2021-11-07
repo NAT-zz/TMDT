@@ -1,5 +1,6 @@
 import re
 from flask import render_template, request, redirect, session, jsonify
+from flask_admin.base import Admin
 from sqlalchemy import util
 from __init__ import app, my_login, CART_KEY
 from admin import*
@@ -16,17 +17,64 @@ import cloudinary.uploader
 def user_load(user_id):
     return Users.query.get(user_id)
 
-@app.route("/login", methods=["POST"])
+@app.route("/loginadmin", methods=["POST"])
 def login_execute():
+    err_msg = ""
     username = request.form.get('username')
     password = request.form.get('password')
-    #password = str(hashlib.md5(pwd.encode("utf-8")).digest())
 
     user = Users.query.filter(Users.username==username, Users.password==password).first()
 
     if user:
-        login_user(user)
+        if user.role == MyRole.ADMIN:
+            login_user(user)
     return redirect("/admin")
+   
+@app.route("/user-login", methods = ["POST", "GET"])
+def normaluser_login():
+    err_msg = ""
+    if request.method == "POST":
+        username = request.form.get("username")
+        pwd = request.form.get("password")
+
+        user = Users.query.filter(Users.username == username, Users.password == pwd).first()
+
+        if user:
+            login_user(user)
+            return redirect(request.args.get("next", "/"))
+        else:
+            err_msg = "Incorrect Username or Password"
+
+    return render_template("page-login.html", err_msg=err_msg)
+    
+@app.route("/user-register", methods=["POST", "GET"])
+def register():
+    err_msg = ""
+    if request.method == 'POST':
+        try:
+            password = request.form.get("password")    
+            confirm_password = request.form.get("confirm-password")
+            if password.strip() == confirm_password.strip():
+                avatar = request.files['avatar']
+                data = request.form.copy()
+                del data['confirm-password']
+
+                if utils.add_user(**data):
+                    return redirect("/user-login")
+                else:
+                    err_msg = "Dữ liệu đầu vào không hợp lệ"
+            else:
+                err_msg = "Mật khẩu không khớp"
+        except:
+            err_msg = "Hệ thống lỗi"
+
+    return render_template("page-reg-page.html", err_msg = err_msg)
+
+
+@app.route("/user-logout")
+def normaluser_logout():
+    logout_user()
+    return redirect("/user-login")
 
 @app.context_processor
 def common_context():
@@ -57,7 +105,7 @@ def detail():
     return render_template('item-detail.html',
                             this_product = product,
                             similar_products = similar_products)
-#sdf
+                            
 @app.route("/product-list")
 def product_list():
     brand_id = request.args.get("brand-id")

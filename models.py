@@ -27,7 +27,6 @@ class Users (db.Model, UserMixin):
     password = Column(String(100), nullable=False)
     phone = Column(String(12), nullable= False, default="123456")
     email = Column(String(30), nullable=False, default="nguoidung@gmail.con")
-    image = Column(String(100), nullable=True)
     role =  Column(Enum(MyRole), default = MyRole.USER)
 
     receipt = relationship("Receipt", backref="user", lazy=True)
