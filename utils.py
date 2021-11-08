@@ -81,6 +81,19 @@ def change_password(username, oldpassword, newpassword):
     else:
         return False
 
+def edit_infor(username, fullname, email, phone):
+    get_user = Users.query.filter(Users.username == username).first()
+    if get_user:
+        get_user.name = fullname
+        get_user.email = email
+        get_user.phone = phone
+        try:
+            db.session.commit()
+            return True
+        except:
+            return False
+    else:
+        return False
 
 # # Thống kê cart
 # def cart_stats(cart):

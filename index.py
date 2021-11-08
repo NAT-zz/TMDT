@@ -3,6 +3,7 @@ from threading import currentThread
 from flask import render_template, request, redirect, session, jsonify
 from flask_admin.base import Admin
 from sqlalchemy import util
+from sqlalchemy.sql.functions import user
 from __init__ import app, my_login, CART_KEY
 from admin import*
 from models import Users
@@ -89,10 +90,25 @@ def normaluer_forget_password():
         return render_template("page-forgotton-password.html")
     return redirect("/")
 
-@app.route("/user-edit-account")
+@app.route("/user-edit-account", methods=["POST", "GET"])
 def normaluser_edit_account():
     if current_user.is_authenticated:
-        return render_template("shop-standart-forms.html")
+        err_msg = ""
+        if request.method == 'POST':
+            try:
+                username = current_user.username
+                fullname = request.form.get("fullname")
+                email = request.form.get("email")
+                phone = request.form.get("phone")
+                data = request.form.copy()
+                    
+                if utils.edit_infor(username=username, fullname=fullname, email = email, phone = phone):
+                    err_msg = "Updated Successfully"
+                else:
+                    err_msg = "Check your information again"
+            except:
+                err_msg = "System error"
+        return render_template("shop-standart-forms.html",err_msg = err_msg)
     return redirect("/")
 
 @app.route("/user-change-password", methods=["POST", "GET"])
