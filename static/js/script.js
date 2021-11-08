@@ -1,10 +1,11 @@
 
 // hàm gọi api
-function addToCart(id, name, price){
+function addToCart(id, name, price, image){
     fetch("/api/add-item-cart", { method: "POST", body: JSON.stringify({
         "product_id": id,
         'product_name': name,
-        'product_price': price
+        'product_price': price,
+        'product_image' : image 
     }), 
     headers: { 'Content-Type': 'application/json'}}).then(function(res) 
     {
@@ -49,13 +50,13 @@ function updateCartItem(obj, productId)
                 counter.innerText = d.total_quantity
         }
         else{
-            alert("Cap nhat that bai")
+            alert("Update Failed")
         }
     })
 }
 
 function deleteCartItem(productId){
-    if (confirm("Ban co chac chan xoa item nay khong: ") == true)
+    if (confirm("Delete this item ?") == true)
     {
         fetch("/api/delete-cart-item/" + productId, 
         {
@@ -80,7 +81,7 @@ function deleteCartItem(productId){
                     counter.innerText = d.total_quantity
             }
             else{
-                alert("Xoa that bai")
+                alert("Delete failed")
             }
         })
     }

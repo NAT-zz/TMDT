@@ -57,8 +57,8 @@
     <li style="color: red;" >{{current_user.name}}</li>
    
     <div class="top-cart-info">
-      <a href="javascript:void(0);" class="top-cart-info-count">3 items</a>
-      <a href="javascript:void(0);" class="top-cart-info-value">$1260</a>
+      <a href="javascript:void(0);" class="top-cart-info-count"><span class = "badge badge-info" id="cartCounter">{{ cart_stats.total_quantity }}</span> items</a>
+      <a href="javascript:void(0);" class="top-cart-info-value">$ {{ cart_stats.total_amount }}</a>
     </div>
 
     <i class="fa fa-shopping-cart" style="position: relative;"></i>
@@ -77,7 +77,7 @@
           
         </ul>
         <div class="text-right">  
-          <a href="shop-shopping-cart.html" class="btn btn-default">View Cart</a>
+          <a href="/cart" class="btn btn-default">View Cart</a>
           <a href="shop-checkout.html" class="btn btn-primary">Checkout</a>
         </div>
       </div>
@@ -105,7 +105,7 @@
                     </div>  
                     <h3><a href="/item-detail?product-id={{ c.id }}">{{c.name}}</a></h3>
                     <div class="pi-price">{{c.price}}</div>
-                    <a href="#" class="btn btn-default add2cart">Add to cart</a>
+                    <a href="javascript:;" class="btn btn-default add2cart" onclick="addToCart({{c.id}}, '{{c.name}}', {{c.price}}, '{{c.image}}')">Add to cart</a>
                   </div>
                 </div>
                 {% endfor %}

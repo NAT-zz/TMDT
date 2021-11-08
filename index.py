@@ -137,8 +137,7 @@ def normaluser_change_password():
     
 @app.context_processor
 def common_context():
-    # cart_stats = utils.cart_stats(session.get("cart"))
-    # "cart_stats": cart_stats
+    cart_stats = utils.cart_stats(session.get("cart"))
     brands = utils.get_all_brands() 
     lastest_products = utils.get_lastest_products(6)
     bestseller_products = utils.get_bestseller_products(6)
@@ -147,6 +146,7 @@ def common_context():
         "brand": brands,
         "new_products":lastest_products,
         "bestseller_products": bestseller_products,
+        "cart_stats": cart_stats
     }
 @app.context_processor
 def quick_func():
@@ -194,6 +194,79 @@ def contact():
 @app.route("/careers")
 def careers():
     return render_template("page-careers.html")
+
+@app.route("/cart")
+def cart():
+    return render_template("shop-shopping-cart.html")
+
+@app.route("/api/add-item-cart", methods = ["POST"]) 
+def add_to_cart():
+    cart = session.get(CART_KEY) #<- key là "cart"
+    # Nếu chưa bỏ j vào giở
+    if not cart:
+        cart = {}
+    
+    data = request.json
+    product_id = str(data["product_id"])
+
+    if product_id in cart: #sản phẩm đã từng bỏ vào giỏ
+        p = cart[product_id]
+        p['quantity'] = p['quantity'] + 1
+    else:
+        cart[product_id] = { 
+            "product_id" : data["product_id"],
+            "product_name" : data["product_name"],
+            "product_price" : data["product_price"],
+            "product_image" : data["product_image"],
+            "quantity" : 1
+        }
+
+    # debug đặt breakpoint
+    # import pdb 
+    # pdb.set_trace()
+
+    session[CART_KEY] = cart
+    return jsonify(utils.cart_stats(cart))
+
+@app.route("/api/update-cart-item", methods=["put"])
+def update_cart_item():
+    cart = session.get(CART_KEY)
+    if cart:
+        data = request.json
+        try:
+            product_id = str(data["product_id"])
+            quantity = data['quantity']
+        except IndexError | KeyError as ex:
+            print(ex)
+        else:
+            if product_id in cart:
+                p = cart[product_id]
+                p['quantity'] = quantity
+                session[CART_KEY] = cart
+            return jsonify({
+                "error_code": 200,
+                "cart_stats": utils.cart_stats(cart)
+            })
+
+    return jsonify({
+        "error_code": 404
+    })
+
+@app.route("/api/delete-cart-item/<product_id>", methods=["delete"])
+def delete_cart_item(product_id):
+    cart = session.get(CART_KEY)
+    if cart:
+        if product_id in cart:
+            del cart[product_id]
+            session[CART_KEY] = cart
+            return jsonify({
+                "error_code": 200,
+                "cart_stats": utils.cart_stats(cart)
+            })
+    
+    return jsonify({
+        "error_code": 404
+    })
 
 @app.route("/") 
 def home():

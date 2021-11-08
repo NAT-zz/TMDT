@@ -185,7 +185,7 @@
               </div>
               <h3><a href="/item-detail?product-id={{ p.id }}">{{p.name}}</a></h3>
               <div class="pi-price">${{p.price}}</div>
-              <a href="#" class="btn btn-default add2cart">Add to cart</a>
+              <a href="javascript:;" class="btn btn-default add2cart" onclick="addToCart({{p.id}}, '{{p.name}}', {{p.price}}, '{{p.image}}')">Add to cart</a>
             </div>
           </div>
           {% endfor %}
@@ -222,7 +222,7 @@
               </div>
               <h3><a href="/item-detail?product-id={{ p.id }}">{{ p.name }}</a></h3>
               <div class="pi-price">${{p.price}}</div>
-              <a href="#" class="btn btn-default add2cart">Add to cart</a>
+              <a href="javascript:;" class="btn btn-default add2cart" onclick="addToCart({{p.id}}, '{{p.name}}', {{p.price}}, '{{p.image}}')">Add to cart</a>
             </div>
           </div>
           {% endfor %}
@@ -250,7 +250,7 @@
               </div>
               <h3><a href="/item-detail?product-id={{ p.id }}">{{p.name}}</a></h3>
               <div class="pi-price">${{p.price}}</div>
-              <a href="#" class="btn btn-default add2cart">Add to cart</a>
+              <a href="javascript:;" class="btn btn-default add2cart" onclick="addToCart({{p.id}}, '{{p.name}}', {{p.price}}, '{{p.image}}')">Add to cart</a>
             </div>
           </div>
           {% endfor %}

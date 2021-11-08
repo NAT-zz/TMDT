@@ -81,7 +81,7 @@ Nostrud duis molestie at dolore.</p>
                 <div class="product-quantity">
                     <input id="product-quantity" type="text" value="1" readonly class="form-control input-sm">
                 </div>
-                <button class="btn btn-primary" type="submit">Add to cart</button>
+                <a href="javascript:;" class="btn btn-primary add2cart" onclick="addToCart({{this_product.id}}, '{{this_product.name}}', {{this_product.price}}, '{{this_product.image}}')">Add to cart</a>
               </div>
               <div class="review">
                 <input type="range" value="4" step="0.25" id="backing4">
@@ -217,7 +217,7 @@ Nostrud duis molestie at dolore.</p>
               </div>
               <h3><a href="/item-detail?product-id={{ p.id }}">{{p.name}}</a></h3>
               <div class="pi-price">${{p.price}}</div>
-              <a href="#" class="btn btn-default add2cart">Add to cart</a>
+              <a href="javascript:;" class="btn btn-default add2cart" onclick="addToCart({{p.id}}, '{{p.name}}', {{p.price}}, '{{p.image}}')">Add to cart</a>
             </div>
           </div>
         {% endfor %}

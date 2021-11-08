@@ -95,19 +95,19 @@ def edit_infor(username, fullname, email, phone):
     else:
         return False
 
-# # Thống kê cart
-# def cart_stats(cart):
-#     total_quantity, total_amount = 0, 0
 
-#     if cart:
-#         for p in cart.values():
-#             total_quantity += p['quantity']
-#             total_amount += p['quantity']*p['product_price']
+def cart_stats(cart):
+    total_quantity, total_amount = 0, 0
 
-#     return {
-#         "total_quantity": total_quantity,
-#         "total_amount" : total_amount
-#     }
+    if cart:
+        for p in cart.values():
+            total_quantity += p['quantity']
+            total_amount += p['quantity']*p['product_price']
+
+    return {
+        "total_quantity": total_quantity,
+        "total_amount" : total_amount
+    }
 
 # def add_receipt(cart):
 #     if cart:
