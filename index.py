@@ -187,6 +187,14 @@ def product_list():
                             kw = kw,
                             total_product_count = count)
 
+@app.route("/contact")
+def contact():
+    return render_template("page-contacts.html")
+
+@app.route("/careers")
+def careers():
+    return render_template("page-careers.html")
+
 @app.route("/") 
 def home():
     mostpupular_products = utils.get_mostpopular_product(6)
