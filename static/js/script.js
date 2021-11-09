@@ -1,11 +1,13 @@
 
 // hàm gọi api
-function addToCart(id, name, price, image){
+function addToCart(id, name, price, image, chip, ram){
     fetch("/api/add-item-cart", { method: "POST", body: JSON.stringify({
         "product_id": id,
         'product_name': name,
         'product_price': price,
-        'product_image' : image 
+        'product_image' : image,
+        'product_chip' : chip,
+        'product_ram' : ram 
     }), 
     headers: { 'Content-Type': 'application/json'}}).then(function(res) 
     {

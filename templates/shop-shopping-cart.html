@@ -30,26 +30,22 @@
                   </td>
                   <td class="goods-page-description"> 
                     <h3><a href="/item-detail?product-id={{ item.product_id }}">{{ item.product_name }}</a></h3>
-                    <p><strong>Item 1</strong> - Color: Green; Size: S</p>
-                    <em>More info is here</em>
+                    <p><strong>Chip: </strong>{{ item.product_chip }}</p>
+                    <p><strong>Ram: </strong>{{ item.product_ram }} GB</p>
                   </td>
                   <td class="goods-page-quantity">
                     <div class="product-quantity">
-                        <!-- <input id="product-quantity" type="number" 
-                        value="{{ item.quantity }}" 
-                        onblur= "updateCartItem(this, {{ item.product_id }})" 
-                        readonly class="form-control input-sm"> -->
                         <input type="number" 
                         value= "{{ item.quantity }}" 
                         onblur= "updateCartItem(this, {{ item.product_id }})"
-                        class = "form-control">
-                    </div>
+                        class = "form-control" id="product-quantity">
+                      </div> 
                   </td>
                   <td class="goods-page-price">
                     <strong><span>$</span>{{ item.product_price }}</strong>
                   </td>
                   <td class="goods-page-total">
-                    <strong><span>$</span>{{ item.product_price }}</strong>
+                    <strong><span>$</span>{{ item.product_price*item.quantity }}</strong>
                   </td>
                   <td class="del-goods-col">
                     <a class="del-goods" value = "Xoa" ONclick= "deleteCartItem({{ item.product_id }})">&nbsp;</a>
@@ -61,39 +57,34 @@
             </div>
 
             <div class="shopping-total">
-              <ul>
-                <li>
-                  <em>Sub total</em>
-                  <strong class="price"><span>$</span>47.00</strong>
-                </li>
-                <li>
-                  <em>Shipping cost</em>
-                  <strong class="price"><span>$</span>3.00</strong>
-                </li>
-                <li class="shopping-total-price">
-                  <em>Total</em>
-                  <strong class="price"><span>$</span>50.00</strong>
-                </li>
-              </ul>
               {% if session.get('cart') %}
-                <div class="alert alrt-infor">
-                        <ul>
-                            <li><h3>So san pham: <span id = "cart_quantity">{{ cart_stats.total_quantity }}</span></h3></li>
-                            <li><h3>Tong tien hoa don: <span id = "cart_amount">{{ cart_stats.total_amount }}</span> VND</h3></li>
-                        </ul>
-                </div>
-                <div>
-                    {% if current_user.is_authenticated %}
-                        <input type="button" onclick = "pay()" value = "Thanh toan" class = "btn btn-success">
-                    {% else %}
-                        <a href="/user-login?next=/cart">DANG NHAP DE THANH TOAN</a>
-                    {% endif %}
-                </div>
-                {% endif %}
+                <ul>
+                  <li>
+                    <em>Number of products</em>
+                    <strong class="price"><span id = "cart_quantity">{{ cart_stats.total_quantity }}</span></strong>
+                  </li>
+                  <li>
+                    <em>Shipping cost</em>
+                    <strong class="price"><span>$</span>3.00</strong>
+                  </li>
+                  <li class="shopping-total-price">
+                    <em>Total</em>
+                    <strong class="price"><span id = "cart_amount">${{ cart_stats.total_amount }}</span></strong>
+                  </li>
+                </ul>
+                
+              {% endif %}
             </div>
+
           </div>
           <a href="/product-list"><button class="btn btn-default" type="submit">Continue shopping <i class="fa fa-shopping-cart"></i></button></a>
-          <button class="btn btn-primary" type="submit">Checkout <i class="fa fa-check"></i></button>
+          {% if current_user.is_authenticated %}
+            {% if session.get('cart') %}
+              <button class="btn btn-primary" type="button" onclick = "pay()" value = "Thanh toan">Pay <i class="fa fa-check"></i></button> 
+            {% endif %}
+          {% else %}
+            <a href="/user-login?next=/cart">Login to finish payment</a>
+          {% endif %}
         </div>
       </div>
       <!-- END CONTENT -->
@@ -118,7 +109,7 @@
               </div>
               <h3><a href="/item-detail?product-id={{ p.id }}">{{p.name}}</a></h3>
               <div class="pi-price">${{p.price}}</div>
-              <a href="javascript:;" class="btn btn-default add2cart" onclick="addToCart({{p.id}}, '{{p.name}}', {{p.price}}, '{{p.image}}')">Add to cart</a>
+              <a href="javascript:;" class="btn btn-default add2cart" onclick="addToCart({{p.id}}, '{{p.name}}', {{p.price}}, '{{p.image}}', '{{p.chip}}', {{p.ram}})">Add to cart</a>
             </div>
           </div>
           {% endfor %}

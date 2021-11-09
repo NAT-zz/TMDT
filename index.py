@@ -197,7 +197,9 @@ def careers():
 
 @app.route("/cart")
 def cart():
-    return render_template("shop-shopping-cart.html")
+    if current_user.is_authenticated:
+        return render_template("shop-shopping-cart.html")
+    return redirect("/")
 
 @app.route("/api/add-item-cart", methods = ["POST"]) 
 def add_to_cart():
@@ -218,6 +220,8 @@ def add_to_cart():
             "product_name" : data["product_name"],
             "product_price" : data["product_price"],
             "product_image" : data["product_image"],
+            "product_chip" : data["product_chip"],
+            "product_ram" : data["product_ram"],
             "quantity" : 1
         }
 

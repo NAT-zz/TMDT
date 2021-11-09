@@ -28,3 +28,8 @@ my_login = LoginManager(app=app)
 
 
 CART_KEY = "cart"
+
+# partner_code = "MOMOYTDW20211109"
+# access_key = "kG8pmfc4K4M3bFqm"
+# secret_key = "nI3noEFbEHynhTR683yqDEqf100Hp1Z0"
+# api_endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor"

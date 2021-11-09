@@ -58,30 +58,11 @@
    
     <div class="top-cart-info">
       <a href="javascript:void(0);" class="top-cart-info-count"><span class = "badge badge-info" id="cartCounter">{{ cart_stats.total_quantity }}</span> items</a>
-      <a href="javascript:void(0);" class="top-cart-info-value">$ {{ cart_stats.total_amount }}</a>
+      <a href="javascript:void(0);" class="top-cart-info-value">$ <span id = "cart_amount">{{ cart_stats.total_amount }}</span></a>  
     </div>
 
-    <i class="fa fa-shopping-cart" style="position: relative;"></i>
-    
-    <div class="top-cart-content-wrapper">
-      <div class="top-cart-content">
-        <ul class="scroller" style="height: 250px;">
-
-          <li>
-            <a href="shop-item.html"><img src="{{ url_for('static', filename = 'styles/assets/frontend/pages/img/cart-img.jpg') }}" alt="Rolex Classic Watch" width="37" height="34"></a>
-            <span class="cart-content-count">x 1</span>
-            <strong><a href="shop-item.html">Rolex Classic Watch</a></strong>
-            <em>$1230</em>
-            <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
-          </li>
-          
-        </ul>
-        <div class="text-right">  
-          <a href="/cart" class="btn btn-default">View Cart</a>
-          <a href="shop-checkout.html" class="btn btn-primary">Checkout</a>
-        </div>
-      </div>
-    </div>            
+    <a href="/cart"><i class="fa fa-shopping-cart" style="position: relative;"></i></a>
+              
   </div>
   {% endif %}
   <!--END CART -->
