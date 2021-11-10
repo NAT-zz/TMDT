@@ -1,0 +1,75 @@
+{% extends "layout/base.html" %}
+{% block content %}
+<div class="main">
+  <div class="container">
+    <ul class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li><a href="/user-account">My Account</a></li>
+        <li class="active">Order History</li>
+    </ul>
+    <!-- BEGIN SIDEBAR & CONTENT -->
+    <div class="row margin-bottom-40">
+      <!-- BEGIN SIDEBAR -->
+      <div class="sidebar col-md-3 col-sm-5">
+        <ul class="list-group margin-bottom-25 sidebar-menu">
+          <li class="list-group-item clearfix"><a href="/cart"><i class="fa fa-angle-right"></i> My Cart</a></li>
+          <li class="list-group-item clearfix"><a href="/product-list"><i class="fa fa-angle-right"></i> To Shopping</a></li>
+        </ul>
+      </div>
+      <!-- END SIDEBAR -->
+
+      <!-- BEGIN CONTENT -->
+      <div class="col-md-9 col-sm-7">
+        {% for r in receipt %}
+
+          <h1>{{ r.created_date }}</h1>
+          <div class="goods-page">
+            <div class="goods-data clearfix">
+              <div class="table-wrapper-responsive">
+              <table summary="Shopping cart">
+                <tr>
+                  <th class="goods-page-image">image</th>
+                  <th class="goods-page-description">Product</th>
+                  <th class="goods-page-description">quantity</th>
+                  <th class="goods-page-price" colspan="2">Total</th>
+                </tr>
+                
+                {% for d in detail %}
+                  {% if d.receitp_id|int == r.id|int %}
+                    {% for p in product %}
+                      {% if p.id|int == d.product_id|int %}
+                        <tr>
+                          <td class="goods-page-image">
+                            <a href="#"><img src="{{ p.image }}" alt="Berry Lace Dress"></a>
+                          </td>
+                          <td class="goods-page-description">
+                            <h3><a href="#">{{ p.name }}</a></h3>
+                            <p><strong>Chip :</strong> {{ p.chip }}</p>
+                            <p><strong>Ram  :</strong> {{ p.ram }} GB</p>
+                          </td>
+                          <td class="goods-page-stock">
+                            {{ d.quantity }}
+                          </td>
+                          <td class="goods-page-price">
+                            <strong><span>$</span>{{ d.quantity*p.price }}</strong>
+                          </td>
+                        </tr>
+                      {% endif %}
+                    {% endfor %}
+                  {% endif %}
+                {% endfor %}
+                <div class = "alert alert-warning">
+                  <span style="font-size: small;">PAID: </span><span style="font-size: medium;" class="text-danger">${{ total_price[r.id] }}</span>
+                </div>
+              </table>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <!-- END CONTENT -->
+    </div>
+    <!-- END SIDEBAR & CONTENT -->
+  </div>
+</div>
+{% endblock %}

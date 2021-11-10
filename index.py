@@ -130,7 +130,7 @@ def normaluser_change_password():
                 else:
                     err_msg = "Check your information again"
             else:
-                err_msg = "Password not match"
+                err_msg = "Password mismatch"
         except:
             err_msg = "System error"
     return render_template("change-password.html", err_msg=err_msg)
@@ -271,6 +271,34 @@ def delete_cart_item(product_id):
     return jsonify({
         "error_code": 404
     })
+
+@app.route("/api/pay", methods = ["POST"])
+def pay():
+    cart = session.get(CART_KEY)
+    if cart:
+        if utils.add_receipt(cart):
+            del session[CART_KEY]
+            return jsonify({
+                "error_code": 200
+            })
+    return jsonify({
+        "error_code": 404
+    })
+
+@app.route("/orders")
+def history_orders():
+    if current_user.is_authenticated:
+        receipt = utils.get_receiptsbyuid(current_user.id)
+        detail = utils.get_receiptdetail()
+        product = utils.get_product()
+
+        total_price = utils.get_totalprice(current_user.id)
+        return render_template("shop-wishlist.html", 
+                                receipt = receipt,
+                                detail = detail,
+                                product = product,
+                                total_price = total_price)
+    return redirect("/")
 
 @app.route("/") 
 def home():

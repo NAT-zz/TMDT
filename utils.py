@@ -109,24 +109,43 @@ def cart_stats(cart):
         "total_amount" : total_amount
     }
 
-# def add_receipt(cart):
-#     if cart:
-#         try:
-#             receipt = Receipt(user = current_user)  
-#             db.session.add(receipt)
+def add_receipt(cart):
+    if cart:
+        try:
+            receipt = Receipt(user = current_user)  
+            db.session.add(receipt)
             
-#             for item in cart.values():
-#                 detail = ReceiptDetail(receipt = receipt, product_id = item['product_id']
-#                 , quantity = item['quantity'], unit_price = item['product_price']) 
-#                 db.session.add(detail)
-#         except Exception as ex:
-#             print("ERROR: " + str(ex))
-#         db.session.commit() 
-#         return True 
+            for item in cart.values():
+                detail = ReceiptDetail(receipt = receipt, product_id = item['product_id']
+                , quantity = item['quantity'], unit_price = item['product_price']) 
+                db.session.add(detail)
+        except Exception as ex:
+            print("ERROR: " + str(ex))
+        db.session.commit() 
+        return True 
     
-#     return False
+    return False
 
+def get_receiptsbyuid(uid):
+    user_receipt = Receipt.query.filter(Receipt.user_id==uid).all()
+    return user_receipt
 
+def get_receiptdetail():
+    detail = ReceiptDetail.query.all()
+    return detail
+
+def get_totalprice(uid):
+    receipt = get_receiptsbyuid(uid)
+    detail = get_receiptdetail()
+
+    thisdict = {}
+    for r in receipt:
+        price = 0 
+        for d in detail:
+            if r.id == d.receitp_id:
+                price += d.quantity*d.unit_price
+        thisdict[r.id] = price
+    return thisdict
 
 #Thêm dữ liệu
 # c = Category('Mobile') 

@@ -89,7 +89,7 @@ function deleteCartItem(productId){
     }
 }
 function pay(){
-    if (confirm("Ban co muon thanh toan khong: ") == true)
+    if (confirm("Confirm payment ?") == true)
     {
         fetch("/api/pay", { 
             method: 'post'
@@ -99,7 +99,7 @@ function pay(){
             if(data.error_code == 200)
                 location.reload()
             else 
-                alert("THANH TOAN DANG CO LOI")
+                alert("Payment failed")
         })
     }
 }
