@@ -12,7 +12,6 @@ def get_productbyid(pid):
 
 def get_lastest_products(number = None):
     products = Product.query.order_by(Product.id.desc()).limit(number)
-    products = products[::-1]
     return products
 
 def get_bestseller_products(number = None):
@@ -22,7 +21,6 @@ def get_bestseller_products(number = None):
 
 def get_mostpopular_product(number = None):
     products = Product.query.order_by(Product.amount.desc()).limit(number)
-    products = products[::-1]
     return products
    
 def count_productbybid(bid):
@@ -119,6 +117,9 @@ def add_receipt(cart):
                 detail = ReceiptDetail(receipt = receipt, product_id = item['product_id']
                 , quantity = item['quantity'], unit_price = item['product_price']) 
                 db.session.add(detail)
+
+                pro = Product.query.get(int(item['product_id']))
+                pro.amount -= int(item['quantity'])
         except Exception as ex:
             print("ERROR: " + str(ex))
         db.session.commit() 
@@ -133,6 +134,7 @@ def get_receiptsbyuid(uid):
 def get_receiptdetail():
     detail = ReceiptDetail.query.all()
     return detail
+
 
 def get_totalprice(uid):
     receipt = get_receiptsbyuid(uid)

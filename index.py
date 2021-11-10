@@ -277,6 +277,7 @@ def pay():
     cart = session.get(CART_KEY)
     if cart:
         if utils.add_receipt(cart):
+            
             del session[CART_KEY]
             return jsonify({
                 "error_code": 200

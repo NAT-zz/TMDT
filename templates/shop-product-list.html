@@ -108,7 +108,7 @@
                   </div>
                   <h3><a href="/item-detail?product-id={{ p.id }}">{{p.name}}</a></h3>
                   <div class="pi-price">${{p.price}}</div>
-                  <a href="javascript:;" class="btn btn-default add2cart" onclick="addToCart({{p.id}}, '{{p.name}}', {{p.price}}, '{{p.image}}', '{{p.chip}}', {{p.ram}})">Add to cart</a>
+                  <a href="javascript:;" class="btn btn-default add2cart {% if p.amount|int==0 %}disabled{% endif %}" onclick="addToCart({{p.id}}, '{{p.name}}', {{p.price}}, '{{p.image}}', '{{p.chip}}', {{p.ram}})">Add to cart</a>
                 </div>
               </div>
               {% endfor %}

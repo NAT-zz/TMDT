@@ -86,7 +86,7 @@
                     </div>  
                     <h3><a href="/item-detail?product-id={{ c.id }}">{{c.name}}</a></h3>
                     <div class="pi-price">{{c.price}}</div>
-                    <a href="javascript:;" class="btn btn-default add2cart" onclick="addToCart({{c.id}}, '{{c.name}}', {{c.price}}, '{{c.image}}')">Add to cart</a>
+                    <a href="javascript:;" class="btn btn-default add2cart {% if c.amount|int==0 %}disabled{% endif %}" onclick="addToCart({{c.id}}, '{{c.name}}', {{c.price}}, '{{c.image}}')">Add to cart</a>
                   </div>
                 </div>
                 {% endfor %}
@@ -104,7 +104,6 @@
         </ul>
       </li>
       <li><a href="/product-list">Products</a></li>
-      <li><a href="onepage-index.html" target="_blank">Information</a></li>
       <li><a href="/admin" target="_blank">Admin</a></li>
       <li><a href="/careers">Contact</a></li>
 
