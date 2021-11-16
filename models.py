@@ -30,7 +30,7 @@ class Users (db.Model, UserMixin):
     role =  Column(Enum(MyRole), default = MyRole.USER)
 
     receipt = relationship("Receipt", backref="user", lazy=True)
-    ship = relationship("Ship", backref="user", lazy=True)
+    ship = relationship("Order", backref="user", lazy=True)
     def __str__(self) -> str:
         return self.name
 
@@ -71,7 +71,7 @@ class Receipt(db.Model):
     created_date = Column(DateTime, default=datetime.now())
 
     detail = relationship("ReceiptDetail", backref="receipt", lazy = True)
-    ship = relationship("Ship", backref="receipt", lazy=True)
+    ship = relationship("Order", backref="receipt", lazy=True)
 
 class ReceiptDetail(db.Model):
     __tablename__ = "receiptdetail"
@@ -82,8 +82,8 @@ class ReceiptDetail(db.Model):
     quantity = Column(Integer, default=0)
     unit_price = Column(Float, default=0)
 
-class Ship(db.Model):
-    __tablename__ = "ship"
+class Order(db.Model):
+    __tablename__ = "order"
     id = Column(Integer, primary_key=True, autoincrement=True)
     cityname = Column(String(30), nullable=False, default="TP. Hồ Chí Minh")
     user_id = Column(Integer, ForeignKey(Users.id), nullable=False)
@@ -97,6 +97,12 @@ class Income(db.Model):
     year = Column(Integer, default= datetime.now().year)
     money = Column(Float, default=0)
 
+class Shipping(db.Model):
+    __tablename__ = "ship"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    cityname = Column(String(50), nullable=False)
+    price = Column(Float, nullable= False, default= 50)
+
 if __name__ == '__main__':
     db.create_all()
 
@@ -107,5 +113,23 @@ if __name__ == '__main__':
     #             username = "admin", password = "123", 
     #             phone = "123", email = "tuan@gmail.com", role = "ADMIN")
     # db.session.add(user)
+    # db.session.commit()
+
+    # ship = Shipping(cityname = "Hồ Chí Minh", price = 20)
+    # ship1 = Shipping(cityname = "Hà Nội", price = 30)
+    # ship2 = Shipping(cityname = "Biên Hòa", price = 40)
+    # ship3 = Shipping(cityname = "Cần Thơ", price = 50)
+    # ship4 = Shipping(cityname = "Phú Thọ", price = 60)
+    # ship5 = Shipping(cityname = "Buôn Ma Thuật", price = 70)
+    # ship6 = Shipping(cityname = "Vũng Tàu", price = 30)
+
+    # db.session.add(ship)
+    # db.session.add(ship1)
+    # db.session.add(ship2)
+    # db.session.add(ship3)
+    # db.session.add(ship4)
+    # db.session.add(ship5)
+    # db.session.add(ship6)
+
     # db.session.commit()
 

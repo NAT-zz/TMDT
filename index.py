@@ -300,6 +300,12 @@ def history_orders():
                                 product = product,
                                 total_price = total_price)
     return redirect("/")
+@app.route("/user-checkout")
+def checkout():
+    if current_user.is_authenticated:
+        shipping = utils.get_allshipping()
+        return render_template("shop-checkout.html", allship = shipping)
+    return redirect("/")
 
 @app.route("/") 
 def home():

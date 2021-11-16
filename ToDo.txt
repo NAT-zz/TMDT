@@ -2,6 +2,7 @@
 - Search filter
 - Payment MOMO
 - Stat
+- CheckOut + ship
 
 - Modify Product-detail page
 - Modify Slider

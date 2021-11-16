@@ -1,0 +1,181 @@
+{% extends "layout/base.html" %}
+{% block content %}
+    <div class="main">
+      <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li><a href="/user-account">My Account</a></li>
+            <li><a href="/cart">Cart</a></li>
+            <li class="active">Checkout</li>
+
+        </ul>
+        <!-- BEGIN SIDEBAR & CONTENT -->
+        <div class="row margin-bottom-40">
+          <!-- BEGIN CONTENT -->
+          <div class="col-md-12 col-sm-12">
+            <h1>Checkout</h1>
+            <!-- BEGIN CHECKOUT PAGE -->
+            <div class="panel-group checkout-page accordion scrollable" id="checkout-page">
+
+              <!-- BEGIN CHECKOUT -->
+              <!-- END CHECKOUT -->
+
+              <!-- BEGIN PAYMENT ADDRESS -->
+              <!-- END PAYMENT ADDRESS -->
+
+              <!-- BEGIN SHIPPING ADDRESS -->
+              <div id="shipping-address" class="panel panel-default">
+                <div class="panel-heading">
+                  <h2 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#checkout-page" href="#shipping-address-content" class="accordion-toggle">
+                      Step 1: Choose your city
+                    </a>
+                  </h2>
+                </div>
+                <div id="shipping-address-content" class="panel-collapse collapse">
+                  <div class="panel-body row">
+                    <div class="col-md-6 col-sm-6">
+                      <div class="form-group">
+                        <label for="country-dd">City <span class="require">*</span></label>
+                        <select class="form-control input-sm" id="country-dd">
+                          {% for item in allship %}
+
+                          <option>{{ item.cityname }}</option>
+                          
+                          {% endfor %}
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <button class="btn btn-primary  pull-right" type="submit" id="button-shipping-address" data-toggle="collapse" data-parent="#checkout-page" data-target="#shipping-method-content">Continue</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- END SHIPPING ADDRESS -->
+
+              <!-- BEGIN SHIPPING METHOD -->
+              <!-- END SHIPPING METHOD -->
+
+              <!-- BEGIN PAYMENT METHOD -->
+              <div id="payment-method" class="panel panel-default">
+                <div class="panel-heading">
+                  <h2 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#checkout-page" href="#payment-method-content" class="accordion-toggle">
+                      Step 2: Payment Method
+                    </a>
+                  </h2>
+                </div>
+                <div id="payment-method-content" class="panel-collapse collapse">
+                  <div class="panel-body row">
+                    <div class="col-md-12">
+                      <p>Please select the preferred payment method to use on this order.</p>
+                      <div class="radio-list">
+                        <label>
+                          <input type="radio" name="paymentmethod"> Cash On Delivery
+                        </label>
+                      </div>
+                      <div class="radio-list">
+                        <label>
+                          <input type="radio" name="paymentmethod"> Pay With Credit Cart
+                        </label>
+                      </div>
+                      <button class="btn btn-primary  pull-right" type="submit" id="button-payment-method" data-toggle="collapse" data-parent="#checkout-page" data-target="#confirm-content">Continue</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- END PAYMENT METHOD -->
+
+              <!-- BEGIN CONFIRM -->
+              <div id="confirm" class="panel panel-default">
+                <div class="panel-heading">
+                  <h2 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#checkout-page" href="#confirm-content" class="accordion-toggle">
+                      Step 3: Confirm Order
+                    </a>
+                  </h2>
+                </div>
+                <div id="confirm-content" class="panel-collapse collapse">
+                  <div class="panel-body row">
+                    <div class="col-md-12 clearfix">
+                      <div class="table-wrapper-responsive">
+                      <table>
+                        <tr>
+                          <th class="goods-page-image">Image</th>
+                          <th class="goods-page-description">Description</th>
+                          <th class="goods-page-quantity">Quantity</th>
+                          <th class="goods-page-price">Unit price</th>
+                          <th class="goods-page-total" colspan="2">Total</th>
+                        </tr>
+                        {% if not session.get('cart') %}
+                        <tr>
+                            <td colspan="5">Please add some products into Cart!!!</td>
+                        </tr>
+                        {% else %}
+                        {% for item in session['cart'].values() %}
+                        <tr>
+                          <td class="goods-page-image">
+                            <a href="/item-detail?product-id={{ item.product_id }}"><img src="{{ item.product_image }}" alt="Berry Lace Dress"></a>
+                          </td>
+                          <td class="goods-page-description"> 
+                            <h3><a href="/item-detail?product-id={{ item.product_id }}">{{ item.product_name }}</a></h3>
+                            <p><strong>Chip: </strong>{{ item.product_chip }}</p>
+                            <p><strong>Ram: </strong>{{ item.product_ram }} GB</p>
+                          </td>
+                          <td class="goods-page-quantity">
+                            <div class="product-quantity">
+                                <input type="number" 
+                                value= "{{ item.quantity }}" 
+                                class = "form-control" id="product-quantity" disabled>
+                              </div> 
+                          </td>
+                          <td class="goods-page-price">
+                            <strong><span>$</span>{{ item.product_price }}</strong>
+                          </td>
+                          <td class="goods-page-total">
+                            <strong><span>$</span>{{ item.product_price*item.quantity }}</strong>
+                          </td>
+                          <td class="del-goods-col">
+                            <a class="del-goods" value = "Xoa" ONclick= "deleteCartItem({{ item.product_id }})">&nbsp;</a>
+                          </td>
+                        </tr>
+                        {% endfor %}
+                        {% endif %}
+                      </table>
+                      </div>
+                      <div class="checkout-total-block">
+                        {% if session.get('cart') %}
+                          <ul>
+                            <li>
+                              <em>Number of products</em>
+                              <strong class="price"><span id = "cart_quantity">{{ cart_stats.total_quantity }}</span></strong>
+                            </li>
+                            <li>
+                              <em>Shipping cost</em>
+                              <strong class="price"><span>$</span>3.00</strong>
+                            </li>
+                            <li class="shopping-total-price">
+                              <em>Total</em>
+                              <strong class="price"><span id = "cart_amount">${{ cart_stats.total_amount }}</span></strong>
+                            </li>
+                          </ul>
+                        {% endif %}
+                      </div>
+                      <div class="clearfix"></div>
+                      <button class="btn btn-primary pull-right" type="submit" id="button-confirm">Confirm Order</button>
+                      <button type="button" class="btn btn-default pull-right margin-right-20"><a href="/cart">Cancel </a></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- END CONFIRM -->
+            </div>
+            <!-- END CHECKOUT PAGE -->
+          </div>
+          <!-- END CONTENT -->
+        </div>
+        <!-- END SIDEBAR & CONTENT -->
+      </div>
+    </div>
+{% endblock %}

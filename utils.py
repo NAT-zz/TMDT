@@ -1,4 +1,5 @@
 from math import prod
+from admin import ShippingModelView
 from models import*
 from __init__ import app, db
 from flask_login import current_user
@@ -149,6 +150,8 @@ def get_totalprice(uid):
         thisdict[r.id] = price
     return thisdict
 
+def get_allshipping():
+    return Shipping.query.all()
 #Thêm dữ liệu
 # c = Category('Mobile') 
 # db.session.add(c)

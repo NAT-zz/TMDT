@@ -81,7 +81,8 @@
           {% if current_user.is_authenticated %}
             {% if session.get('cart') %}
               <button class="btn btn-primary" type="button" onclick = "pay()" value = "Thanh toan">Pay <i class="fa fa-check"></i></button> 
-            {% endif %}
+              <a href="/user-checkout" class="text-light"><button class="btn btn-primary" type="button">Checkout <i class="fa fa-check"></i></button></a> 
+              {% endif %}
           {% else %}
             <a href="/user-login?next=/cart">Login to finish payment</a>
           {% endif %}

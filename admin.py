@@ -47,9 +47,9 @@ class UserModelView(AuthenticatedView):
     column_display_pk = True
     column_editable_list = ("name", "username", "phone", "email", "password")
 
-    column_filters = ("id", "receipt", "ship", "name", "username", Receipt.id, Ship.id)
+    column_filters = ("id", "receipt", "ship", "name", "username", Receipt.id, Order.id)
     column_default_sort = [("id", True)]
-    column_searchable_list = ("id", "name", "username", "phone", "email", Receipt.id, Ship.id)
+    column_searchable_list = ("id", "name", "username", "phone", "email", Receipt.id, Order.id)
     column_descriptions = dict(
         username = "Username must be unique"
     )
@@ -100,7 +100,7 @@ class ReceiptDetailModelView(AuthenticatedView):
     column_searchable_list = ("id","product_id", "quantity", "unit_price")
     can_set_page_size = True
 
-class ShipModelView(AuthenticatedView):
+class OrderModelView(AuthenticatedView):
     can_export = True
     can_view_details = True
     column_display_pk = True
@@ -119,12 +119,21 @@ class IncomeModelView(AuthenticatedView):
     can_create = False
     can_edit = False
 
+class ShippingModelView(AuthenticatedView):
+    can_export = True
+    can_view_details = True
+    column_display_pk = True
+    can_create = True
+    can_edit = True
+    column_editable_list = ("cityname", "price")
+
 admin.add_view(UserModelView(Users ,db.session, name = "Users"))
 admin.add_view(BrandModelView(Brand, db.session, name = "Brands"))
 admin.add_view(ProductModelView(Product,db.session, name = "Products"))
 admin.add_view(ReceiptModelView(Receipt, db.session, name = "Receipts"))
 admin.add_view(ReceiptDetailModelView(ReceiptDetail, db.session, name = "ReceiptDetail"))
-admin.add_view(ShipModelView(Ship, db.session, name = "Ship"))
+admin.add_view(OrderModelView(Order, db.session, name = "Orders"))
+admin.add_view(ShippingModelView(Shipping, db.session, name="Shipping"))
 admin.add_view(IncomeModelView(Income, db.session, name = "Stats"))
 admin.add_view(LogoutView(name = "LogOut"))
 
