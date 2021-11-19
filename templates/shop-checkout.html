@@ -37,17 +37,17 @@
                     <div class="col-md-6 col-sm-6">
                       <div class="form-group">
                         <label for="country-dd">City <span class="require">*</span></label>
-                        <select class="form-control input-sm" id="country-dd">
+                        <select class="form-control input-sm" id="mySelect" 
+                        onChange="document.getElementById('selectedValue').innerHTML = this.value;">
+                          <option>--Please Select--</option>
                           {% for item in allship %}
 
                           <option>{{ item.cityname }}</option>
                           
                           {% endfor %}
                         </select>
+                        </label>  
                       </div>
-                    </div>
-                    <div class="col-md-12">
-                      <button class="btn btn-primary  pull-right" type="submit" id="button-shipping-address" data-toggle="collapse" data-parent="#checkout-page" data-target="#shipping-method-content">Continue</button>
                     </div>
                   </div>
                 </div>
@@ -136,9 +136,6 @@
                           <td class="goods-page-total">
                             <strong><span>$</span>{{ item.product_price*item.quantity }}</strong>
                           </td>
-                          <td class="del-goods-col">
-                            <a class="del-goods" value = "Xoa" ONclick= "deleteCartItem({{ item.product_id }})">&nbsp;</a>
-                          </td>
                         </tr>
                         {% endfor %}
                         {% endif %}
@@ -150,6 +147,10 @@
                             <li>
                               <em>Number of products</em>
                               <strong class="price"><span id = "cart_quantity">{{ cart_stats.total_quantity }}</span></strong>
+                            </li>
+                            <li>
+                              <em>City</em>
+                              <strong class="price"><span id="selectedValue"></span></strong>
                             </li>
                             <li>
                               <em>Shipping cost</em>
@@ -178,4 +179,5 @@
         <!-- END SIDEBAR & CONTENT -->
       </div>
     </div>
+
 {% endblock %}
