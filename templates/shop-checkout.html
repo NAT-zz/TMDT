@@ -152,10 +152,6 @@
                               <em>City</em>
                               <strong class="price"><span id="selectedValue"></span></strong>
                             </li>
-                            <li>
-                              <em>Shipping cost</em>
-                              <strong class="price"><span>$</span>3.00</strong>
-                            </li>
                             <li class="shopping-total-price">
                               <em>Total</em>
                               <strong class="price"><span id = "cart_amount">${{ cart_stats.total_amount }}</span></strong>
@@ -164,7 +160,7 @@
                         {% endif %}
                       </div>
                       <div class="clearfix"></div>
-                      <button class="btn btn-primary pull-right" type="submit" id="button-confirm">Confirm Order</button>
+                      <button class="btn btn-primary pull-right" type="submit" onclick = "confirm_order()" value = "Thanh toan" id="button-confirm"> Confirm Order</button>
                       <button type="button" class="btn btn-default pull-right margin-right-20"><a href="/cart">Cancel </a></button>
                     </div>
                   </div>
@@ -179,5 +175,10 @@
         <!-- END SIDEBAR & CONTENT -->
       </div>
     </div>
-
+<script>
+function confirm_order(){
+  var city = document.getElementById('selectedValue').innerHTML;
+  pay(city);
+}
+</script>
 {% endblock %}

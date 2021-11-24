@@ -272,12 +272,12 @@ def delete_cart_item(product_id):
         "error_code": 404
     })
 
-@app.route("/api/pay", methods = ["POST"])
-def pay():
+@app.route("/api/pay/<cityname>", methods = ["POST", "GET"])
+def pay(cityname):
     cart = session.get(CART_KEY)
+        
     if cart:
-        if utils.add_receipt(cart):
-            
+        if utils.add_receipt(cart, cityname = cityname):
             del session[CART_KEY]
             return jsonify({
                 "error_code": 200
@@ -292,13 +292,18 @@ def history_orders():
         receipt = utils.get_receiptsbyuid(current_user.id)
         detail = utils.get_receiptdetail()
         product = utils.get_product()
+        
+        ship = utils.get_allshipping()
+        order = utils.get_ordersbyuid(current_user.id)
 
         total_price = utils.get_totalprice(current_user.id)
         return render_template("shop-wishlist.html", 
                                 receipt = receipt,
                                 detail = detail,
                                 product = product,
-                                total_price = total_price)
+                                total_price = total_price,
+                                ship = ship,
+                                order = order)
     return redirect("/")
 @app.route("/user-checkout")
 def checkout():

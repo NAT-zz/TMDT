@@ -1,4 +1,6 @@
 from math import prod
+
+from sqlalchemy.sql.functions import cume_dist, user
 from models import*
 from __init__ import app, db
 from flask_login import current_user
@@ -107,25 +109,36 @@ def cart_stats(cart):
         "total_amount" : total_amount
     }
 
-def add_receipt(cart):
+def add_receipt(cart, cityname):
     if cart:
         try:
-            receipt = Receipt(user = current_user)  
+            receipt = Receipt(user = current_user) 
             db.session.add(receipt)
             
+            sub_total = 0
             for item in cart.values():
                 detail = ReceiptDetail(receipt = receipt, product_id = item['product_id']
                 , quantity = item['quantity'], unit_price = item['product_price']) 
+                sub_total+=item['product_price']*item['quantity']
                 db.session.add(detail)
 
                 pro = Product.query.get(int(item['product_id']))
                 pro.amount -= int(item['quantity'])
+            
+            if cityname: 
+                ship = Shipping.query.filter(Shipping.cityname == cityname).first()
+                total = sub_total + ship.price
+                order = Order(cityname = cityname, user = current_user, receipt = receipt, price = total)
         except Exception as ex:
             print("ERROR: " + str(ex))
         db.session.commit() 
         return True 
     
     return False
+
+def get_ordersbyuid(uid):
+    user_order = Order.query.filter(Order.user_id==uid).all()
+    return user_order
 
 def get_receiptsbyuid(uid):
     user_receipt = Receipt.query.filter(Receipt.user_id==uid).all()
@@ -134,7 +147,6 @@ def get_receiptsbyuid(uid):
 def get_receiptdetail():
     detail = ReceiptDetail.query.all()
     return detail
-
 
 def get_totalprice(uid):
     receipt = get_receiptsbyuid(uid)

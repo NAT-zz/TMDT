@@ -88,10 +88,10 @@ function deleteCartItem(productId){
         })
     }
 }
-function pay(){
+function pay(cityname){
     if (confirm("Confirm payment ?") == true)
     {
-        fetch("/api/pay", { 
+        fetch("/api/pay/" + cityname,{ 
             method: 'post'
         }).then(function(res){
                 return res.json()

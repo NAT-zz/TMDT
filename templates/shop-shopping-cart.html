@@ -63,10 +63,6 @@
                     <em>Number of products</em>
                     <strong class="price"><span id = "cart_quantity">{{ cart_stats.total_quantity }}</span></strong>
                   </li>
-                  <li>
-                    <em>Shipping cost</em>
-                    <strong class="price"><span>$</span>3.00</strong>
-                  </li>
                   <li class="shopping-total-price">
                     <em>Total</em>
                     <strong class="price"><span id = "cart_amount">${{ cart_stats.total_amount }}</span></strong>
@@ -80,7 +76,6 @@
           <a href="/product-list"><button class="btn btn-default" type="submit">Continue shopping <i class="fa fa-shopping-cart"></i></button></a>
           {% if current_user.is_authenticated %}
             {% if session.get('cart') %}
-              <button class="btn btn-primary" type="button" onclick = "pay()" value = "Thanh toan">Pay <i class="fa fa-check"></i></button> 
               <a href="/user-checkout" class="text-light"><button class="btn btn-primary" type="button">Checkout <i class="fa fa-check"></i></button></a> 
               {% endif %}
           {% else %}

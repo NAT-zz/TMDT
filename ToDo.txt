@@ -1,7 +1,6 @@
 - View Product
 - Search filter
 - Payment MOMO
-- CheckOut + ship
 
 - Modify Product-detail page
 - Modify Slider

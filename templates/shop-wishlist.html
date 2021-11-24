@@ -59,7 +59,12 @@
                   {% endif %}
                 {% endfor %}
                 <div class = "alert alert-warning">
-                  <span style="font-size: small;">PAID: </span><span style="font-size: medium;" class="text-danger">${{ total_price[r.id] }}</span>
+                  {% for o in order %}
+                    {% if o.receipt_id|int == r.id|int %}
+                      <span style="font-size: medium;">PAID: </span><span style="font-size: medium;" class="text-danger">${{ o.price }}</span>
+                      <span style="font-size: medium; float: right;">To: <span style="font-size: medium;" class="text-danger"> {{ o.cityname }}</span></span>
+                    {% endif %}
+                  {% endfor %}
                 </div>
               </table>
             </div>
