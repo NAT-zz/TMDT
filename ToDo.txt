@@ -1,8 +1,6 @@
-- View Product
 - Search filter
 - Payment MOMO
 - pythonanywhere
 
 - Modify Product-detail page
-- Modify Slider
 - Modify Contact page
