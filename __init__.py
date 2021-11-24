@@ -19,7 +19,6 @@ app.secret_key = "(A*FA(GAGASDA*&"
 
 app.config["PAGE_SIZE"] = 3
 db = SQLAlchemy(app=app)
-admin = Admin(app=app, name = "UTE SHOP", template_mode = 'bootstrap4')
 my_login = LoginManager(app=app)
 
 # cloudinary.config(cloud_name = app.config["CLOUDINARY_INFO"]['cloud_name'],

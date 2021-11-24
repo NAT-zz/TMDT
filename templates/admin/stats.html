@@ -2,7 +2,77 @@
 
 {% block body %}
 
-<h1 class="text-danger">THONG KE BAO CAO DOANH THU</h1>
+<div class = "row">
+    <div class = "col-md-5 col-xs-12">
+        <table class = "table">
+            <tr>
+                <th>Product ID</th>
+                <th>Product</th>
+                <th>Total</th>
+            </tr>
+            {% for s in stats %}
+            <tr>
+                <td>{{ s[0] }} </td>
+                <td>{{ s[1] }} </td>
+                <td>{% if s[2] %}{{ s[2] }} {% else %} 0 {% endif %} VND</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class = "col-md-7 col-xs-12">
+        <form action="/admin/doanhthu/">
+            <div class = "row">
+                <div class = "row-md-6 form-group">
+                    <input type="date" name="from_date" placeholder="Thời gian bắt đầu..." class= "form-control"/>
+                </div>
+                <div class = "row-md-6">
+                    <input type="date" name="to_date" placeholder="Thời gian kết thúc..." class= "form-control"/>
+                </div>  
+            </div>
+        <input type="submit" value="With Filter" class = "btn btn-danger">
+        </form>
+        <canvas id="productStatsId"></canvas>
+    </div>
+</div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+let labels = [], info = [];
+
+{% for c in stats %}
+    {% if c[2] %}
+        labels.push('{{ c[1] }}')
+        info.push('{{ c[2] }}')
+    {% endif %}
+{% endfor %}
+
+let colors = []
+for (let i = 0; i < labels.length ; i++){
+    let r = parseInt(Math.random() * 255)
+    let g = parseInt(Math.random() * 255)
+    let b = parseInt(Math.random() * 255)
+    colors.push(`rgb(${r}, ${g}, ${b})`)
+}
+
+const data = {
+    labels: labels,
+    datasets: [{
+      label: 'Product statistics by product',
+      data: info,
+      backgroundColor: colors,
+      hoverOffset: 4
+    }]
+  };
+
+  const config = {
+  type: 'bar',
+  data: data,
+};
+
+window.onload = function() {
+  let ctx = document.getElementById("productStatsId").getContext('2d')
+  new Chart(ctx, config)
+}
+</script>
 
 {% endblock %}

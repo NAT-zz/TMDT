@@ -90,13 +90,6 @@ class Order(db.Model):
     receipt_id = Column(Integer, ForeignKey(Receipt.id), nullable=False)
     price = Column(Float, nullable=False, default=30.0)
 
-class Income(db.Model):
-    __tablename__ = "income"
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    month = Column(Integer, default=datetime.now().month)
-    year = Column(Integer, default= datetime.now().year)
-    money = Column(Float, default=0)
-
 class Shipping(db.Model):
     __tablename__ = "ship"
     id = Column(Integer, primary_key=True, autoincrement=True)

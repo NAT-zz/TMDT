@@ -1,5 +1,4 @@
 from math import prod
-from admin import ShippingModelView
 from models import*
 from __init__ import app, db
 from flask_login import current_user
@@ -152,6 +151,23 @@ def get_totalprice(uid):
 
 def get_allshipping():
     return Shipping.query.all()
+
+def product_stats_by_cate():
+    return    db.session.query(Brand.id, Brand.name, func.count(Product.id))\
+                .join(Product, Product.brand_id==Brand.id, isouter = True)\
+                .group_by(Brand.id, Brand.name).all()
+
+def product_stats(from_date = None, to_date = None):
+    stats =  db.session.query(Product.id, Product.name, func.sum(ReceiptDetail.unit_price*ReceiptDetail.quantity))
+
+    if from_date:
+        stats = stats.filter(Receipt.created_date.__ge__(from_date))
+    if to_date:
+        stats = stats.filter(Receipt.created_date.__le__(to_date))
+
+    return  stats.join(ReceiptDetail, ReceiptDetail.product_id==Product.id, isouter = True)\
+            .join(Receipt, ReceiptDetail.receitp_id==Receipt.id, isouter = True)\
+            .group_by(Product.id, Product.name).all()
 #Thêm dữ liệu
 # c = Category('Mobile') 
 # db.session.add(c)

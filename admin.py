@@ -1,16 +1,24 @@
-from flask import redirect
-from flask_admin import BaseView, expose
+from flask import redirect, request
+from flask_admin import BaseView, expose, AdminIndexView, Admin
 from flask_admin.contrib.sqla import ModelView, form
 from flask_login import current_user, logout_user
 
-from __init__ import admin, db
+from __init__ import db, app
 from models import*
 import models
+import utils
 
+class MyAdminIndex(AdminIndexView):
+    @expose("/")
+    def index(self):
+        return self.render('admin/index.html')
+
+admin = Admin(app=app, name = "UTE SHOP", template_mode = 'bootstrap4')
 
 class AuthenticatedView(ModelView):
     def is_accessible(self):
         return current_user.is_authenticated and current_user.role == MyRole.ADMIN
+        
 class LogoutView(BaseView):
     @expose('/')
     def index(self):
@@ -18,28 +26,28 @@ class LogoutView(BaseView):
         return redirect("/admin")
     def is_accessible(self):
         return current_user.is_authenticated
-class DoanhThu(AuthenticatedView):
+
+class DoanhThu(BaseView):
     @expose('/')
     def index(self):
-        return self.render("admin/stats.html") 
-        
-# class BangGiaVeModelView(AuthenticatedView):
-#     can_export = True
-#     can_view_details = True
-#     column_editable_list = ('SoGhe', 'GiaVe')
+        from_date = request.args.get("from_date")
+        to_date = request.args.get("to_date")
 
-#     column_default_sort = [('SoGhe', False), ('GiaVe', True)]
-#     column_filters = ('GiaVe', 'chuyenbay', "SoGhe", "HangVe")
-#     column_searchable_list = ('HangVe', 'SoGhe')
+        stats = utils.product_stats(from_date=from_date, to_date=to_date)
+        return self.render("admin/stats.html", stats= stats) 
 
-#     column_labels = dict(HangVe = "Hạng",
-#                         GiaVe = "Giá",
-#                         SoGhe = "Số Ghế",
-#                         chuyenbay = "Chuyến Bay")
-#     column_descriptions = dict(HangVe = "Thường, Thương Gia,...",
-#                                 GiaVe = "500.000VND - 1.000.000VND",
-#                                 SoGhe = "Tối Đa 50")
-#     can_set_page_size = True
+    def is_accessible(self):
+        return current_user.is_authenticated and current_user.role == MyRole.ADMIN
+
+class BrandStat(BaseView):
+    @expose('/')
+    def index(self):
+        stats = utils.product_stats_by_cate()
+        return self.render("admin/stats2.html", stats= stats)
+         
+    def is_accessible(self):
+        return current_user.is_authenticated and current_user.role == MyRole.ADMIN
+
 
 class UserModelView(AuthenticatedView):
     can_export = True
@@ -112,13 +120,6 @@ class OrderModelView(AuthenticatedView):
     column_searchable_list = ("cityname", "price", Users.name, Receipt.id, Product.name)
     can_set_page_size = True
 
-class IncomeModelView(AuthenticatedView):
-    can_export = True
-    can_view_details = True
-    column_display_pk = True
-    can_create = False
-    can_edit = False
-
 class ShippingModelView(AuthenticatedView):
     can_export = True
     can_view_details = True
@@ -134,7 +135,8 @@ admin.add_view(ReceiptModelView(Receipt, db.session, name = "Receipts"))
 admin.add_view(ReceiptDetailModelView(ReceiptDetail, db.session, name = "ReceiptDetail"))
 admin.add_view(OrderModelView(Order, db.session, name = "Orders"))
 admin.add_view(ShippingModelView(Shipping, db.session, name="Shipping"))
-admin.add_view(IncomeModelView(Income, db.session, name = "Stats"))
+admin.add_view(DoanhThu(name = "Stats"))
+admin.add_view(BrandStat(name = "Brand Stats"))
 admin.add_view(LogoutView(name = "LogOut"))
 
 
