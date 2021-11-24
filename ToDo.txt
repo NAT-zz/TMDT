@@ -1,6 +1,5 @@
 - Search filter
-- Payment MOMO
-- pythonanywhere
+- Payment Method
+- pythonanywhere (optional)
 
 - Modify Product-detail page
-- Modify Contact page
