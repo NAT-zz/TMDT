@@ -1,5 +1,4 @@
 - Search filter
-- Payment Method
-- pythonanywhere (optional)
+- Payment Method ??
 
 - Modify Product-detail page
