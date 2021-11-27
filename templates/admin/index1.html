@@ -1,0 +1,17 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+{% if current_user.is_authenticated %}
+<h1 class="text-danger text-center">WELCOME {{ current_user.name }} TO ADMIN PAGE</h1>
+{% else %}
+<h1 class ="text-center text-danger">LOGIN ADMIN</h1>
+<form action="/loginadmin" method="post">
+    {% include 'layout/login.html' %}
+</form>
+
+
+{% endif %}
+
+{% endblock %}
+
+

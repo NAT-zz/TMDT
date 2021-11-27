@@ -1,0 +1,21 @@
+{% block header %}
+      {% include 'layout/admin/header_admin.html' %}
+{% endblock %}
+
+<div class="clearfix">
+</div>
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+    <!-- BEGIN SIDEBAR -->
+	{% include 'layout/admin/sidebar_admin.html' %}
+	<!-- END SIDEBAR -->
+	<!-- BEGIN CONTENT -->
+    {% block body %}
+	{% endblock %}
+	<!-- END CONTENT -->
+</div>
+<!-- END CONTAINER -->
+
+{% block footer %}
+      {% include "layout/admin/footer_admin.html" %}
+{% endblock %}

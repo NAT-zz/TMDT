@@ -8,16 +8,19 @@ from models import*
 import models
 import utils
 
-class MyAdminIndex(AdminIndexView):
-    @expose("/")
-    def index(self):
-        return self.render('admin/index.html')
-
-admin = Admin(app=app, name = "UTE SHOP", template_mode = 'bootstrap4')
 
 class AuthenticatedView(ModelView):
     def is_accessible(self):
         return current_user.is_authenticated and current_user.role == MyRole.ADMIN
+
+class MyAdminIndex(AdminIndexView):
+    @expose("/")
+    def index(self):
+        return self.render('admin/index.html')
+    def is_accessible(self):
+        return current_user.is_authenticated and current_user.role == MyRole.ADMIN
+
+admin = Admin(app=app, name = "UTE SHOP", template_mode = 'bootstrap4')
         
 class LogoutView(BaseView):
     @expose('/')
@@ -50,6 +53,11 @@ class BrandStat(BaseView):
 
 
 class UserModelView(AuthenticatedView):
+    list_template = 'layout/admin/list_admin.html'
+    edit_template = 'admin/model/edit.html'
+    create_template = 'admin/model/create.html'
+
+
     can_export = True
     can_view_details = True
     column_display_pk = True
