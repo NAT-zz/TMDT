@@ -53,10 +53,10 @@ class BrandStat(BaseView):
 
 
 class UserModelView(AuthenticatedView):
-    list_template = 'layout/admin/list_admin.html'
-    edit_template = 'admin/model/edit.html'
-    create_template = 'admin/model/create.html'
-
+    list_template = 'layout/layout_admin/list_admin.html'
+    edit_template = 'layout/layout_admin/edit_admin.html'
+    create_template = 'layout/layout_admin/create_admin.html'
+    details_template = 'layout/layout_admin/details_admin.html'
 
     can_export = True
     can_view_details = True
@@ -72,6 +72,11 @@ class UserModelView(AuthenticatedView):
     can_set_page_size = True
 
 class BrandModelView(AuthenticatedView):
+    list_template = 'layout/layout_admin/list_admin.html'
+    edit_template = 'layout/layout_admin/edit_admin.html'
+    create_template = 'layout/layout_admin/create_admin.html'
+    details_template = 'layout/layout_admin/details_admin.html'
+
     can_export = True
     can_view_details = True
     column_display_pk = True
@@ -83,6 +88,11 @@ class BrandModelView(AuthenticatedView):
     can_set_page_size = True
 
 class ProductModelView(AuthenticatedView):
+    list_template = 'layout/layout_admin/list_admin.html'
+    edit_template = 'layout/layout_admin/edit_admin.html'
+    create_template = 'layout/layout_admin/create_admin.html'
+    details_template = 'layout/layout_admin/details_admin.html'
+
     can_export = True
     can_view_details = True
     column_display_pk = True
@@ -95,6 +105,11 @@ class ProductModelView(AuthenticatedView):
     can_set_page_size = True
 
 class ReceiptModelView(AuthenticatedView):
+    list_template = 'layout/layout_admin/list_admin.html'
+    edit_template = 'layout/layout_admin/edit_admin.html'
+    create_template = 'layout/layout_admin/create_admin.html'
+    details_template = 'layout/layout_admin/details_admin.html'
+
     can_export = True
     can_view_details = True
     column_display_pk = True
@@ -105,6 +120,11 @@ class ReceiptModelView(AuthenticatedView):
     can_set_page_size = True
 
 class ReceiptDetailModelView(AuthenticatedView):
+    list_template = 'layout/layout_admin/list_admin.html'
+    edit_template = 'layout/layout_admin/edit_admin.html'
+    create_template = 'layout/layout_admin/create_admin.html'
+    details_template = 'layout/layout_admin/details_admin.html'
+
     can_export = True
     can_view_details = True
     column_display_pk = True
@@ -117,6 +137,11 @@ class ReceiptDetailModelView(AuthenticatedView):
     can_set_page_size = True
 
 class OrderModelView(AuthenticatedView):
+    list_template = 'layout/layout_admin/list_admin.html'
+    edit_template = 'layout/layout_admin/edit_admin.html'
+    create_template = 'layout/layout_admin/create_admin.html'
+    details_template = 'layout/layout_admin/details_admin.html'
+
     can_export = True
     can_view_details = True
     column_display_pk = True
@@ -129,6 +154,11 @@ class OrderModelView(AuthenticatedView):
     can_set_page_size = True
 
 class ShippingModelView(AuthenticatedView):
+    list_template = 'layout/layout_admin/list_admin.html'
+    edit_template = 'layout/layout_admin/edit_admin.html'
+    create_template = 'layout/layout_admin/create_admin.html'
+    details_template = 'layout/layout_admin/details_admin.html'
+
     can_export = True
     can_view_details = True
     column_display_pk = True
@@ -139,10 +169,12 @@ class ShippingModelView(AuthenticatedView):
 admin.add_view(UserModelView(Users ,db.session, name = "Users"))
 admin.add_view(BrandModelView(Brand, db.session, name = "Brands"))
 admin.add_view(ProductModelView(Product,db.session, name = "Products"))
+admin.add_view(OrderModelView(Order, db.session, name = "Orders"))
 admin.add_view(ReceiptModelView(Receipt, db.session, name = "Receipts"))
 admin.add_view(ReceiptDetailModelView(ReceiptDetail, db.session, name = "ReceiptDetail"))
-admin.add_view(OrderModelView(Order, db.session, name = "Orders"))
 admin.add_view(ShippingModelView(Shipping, db.session, name="Shipping"))
+
+
 admin.add_view(DoanhThu(name = "Stats"))
 admin.add_view(BrandStat(name = "Brand Stats"))
 admin.add_view(LogoutView(name = "LogOut"))

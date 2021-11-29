@@ -1,5 +1,5 @@
 {% block header %}
-      {% include 'layout/admin/header_admin.html' %}
+      {% include 'layout/layout_admin/header_admin.html' %}
 {% endblock %}
 
 <div class="clearfix">
@@ -7,15 +7,19 @@
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
     <!-- BEGIN SIDEBAR -->
-	{% include 'layout/admin/sidebar_admin.html' %}
+	{% include 'layout/layout_admin/sidebar_admin.html' %}
 	<!-- END SIDEBAR -->
 	<!-- BEGIN CONTENT -->
+	<div class="page-content-wrapper">
+		<div class="page-content">
     {% block body %}
 	{% endblock %}
+		</div>
+	</div>
 	<!-- END CONTENT -->
 </div>
 <!-- END CONTAINER -->
 
 {% block footer %}
-      {% include "layout/admin/footer_admin.html" %}
+      {% include "layout/layout_admin/footer_admin.html" %}
 {% endblock %}
