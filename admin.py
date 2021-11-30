@@ -173,11 +173,10 @@ admin.add_view(OrderModelView(Order, db.session, name = "Orders"))
 admin.add_view(ReceiptModelView(Receipt, db.session, name = "Receipts"))
 admin.add_view(ReceiptDetailModelView(ReceiptDetail, db.session, name = "ReceiptDetail"))
 admin.add_view(ShippingModelView(Shipping, db.session, name="Shipping"))
-
+admin.add_view(LogoutView(name = "LogOut"))
 
 admin.add_view(DoanhThu(name = "Stats"))
 admin.add_view(BrandStat(name = "Brand Stats"))
-admin.add_view(LogoutView(name = "LogOut"))
 
 
 

@@ -6,17 +6,17 @@
 </div>
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
-    <!-- BEGIN SIDEBAR -->
 	{% include 'layout/layout_admin/sidebar_admin.html' %}
-	<!-- END SIDEBAR -->
-	<!-- BEGIN CONTENT -->
 	<div class="page-content-wrapper">
 		<div class="page-content">
-    {% block body %}
-	{% endblock %}
+			{% if current_user.is_authenticated %}
+				{% block body %}
+				{% endblock %}
+			{% else %}
+				{% include 'layout/layout_admin/login.html' %}
+			{% endif %}
 		</div>
 	</div>
-	<!-- END CONTENT -->
 </div>
 <!-- END CONTAINER -->
 
