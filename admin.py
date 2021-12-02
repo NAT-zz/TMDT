@@ -58,10 +58,11 @@ class UserModelView(AuthenticatedView):
     create_template = 'layout/layout_admin/create_admin.html'
     details_template = 'layout/layout_admin/details_admin.html'
 
+    column_list = ("name", "username", "phone", "email")
     can_export = True
     can_view_details = True
     column_display_pk = True
-    column_editable_list = ("name", "username", "phone", "email", "password")
+    column_editable_list = ("name", "username", "phone", "email")
 
     column_filters = ("id", "receipt", "ship", "name", "username", Receipt.id, Order.id)
     column_default_sort = [("id", True)]
