@@ -59,6 +59,7 @@ class UserModelView(AuthenticatedView):
     details_template = 'layout/layout_admin/details_admin.html'
 
     column_list = ("name", "username", "phone", "email")
+    can_edit = False
     can_export = True
     can_view_details = True
     column_display_pk = True
