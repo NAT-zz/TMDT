@@ -17,7 +17,7 @@ app.secret_key = "(A*FA(GAGASDA*&"
 #     "api_secret": "7-zbW0Pat43_axsYVZ2ULRTe5zY"
 # }
 
-app.config["PAGE_SIZE"] = 3
+app.config["PAGE_SIZE"] = 9
 db = SQLAlchemy(app=app)
 my_login = LoginManager(app=app)
 
