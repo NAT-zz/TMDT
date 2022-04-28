@@ -1,4 +1,4 @@
 - Search filter
-- Payment Method ??
 
-- Modify Product-detail page
+- Payment method ??
+- Login method ??
