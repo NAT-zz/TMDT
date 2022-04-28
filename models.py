@@ -99,7 +99,7 @@ class Shipping(db.Model):
 if __name__ == '__main__':
     db.create_all()
 
-    #-------CHỈ CHẠY 1 LẦN--------
+    #-------CHỈ CHẠY 1 LẦN - CHẠY = TERMINAL---------
 
     #Admin mặc định
     # user = Users(name = "tuannguyen", 
