@@ -1,18 +1,20 @@
-{% extends "layout/base.html" %}
-
-{% block content %}
+{% extends "layout/base.html" %} {% block content %}
 <div class="main">
   <div class="container">
     <ul class="breadcrumb">
-        <li><a href="/">Home</a></li>
-        <li class="/user-login">Login</li>
+      <li><a href="/">Home</a></li>
+      <li class="/user-login">Login</li>
     </ul>
     <!-- BEGIN SIDEBAR & CONTENT -->
     <div class="row margin-bottom-40">
       <!-- BEGIN SIDEBAR -->
       <div class="sidebar col-md-3 col-sm-3">
         <ul class="list-group margin-bottom-25 sidebar-menu">
-          <li class="list-group-item clearfix"><a href="/user-register"><i class="fa fa-angle-right"></i>Register</a></li>
+          <li class="list-group-item clearfix">
+            <a href="/user-register"
+              ><i class="fa fa-angle-right"></i>Register</a
+            >
+          </li>
         </ul>
       </div>
       <!-- END SIDEBAR -->
@@ -24,21 +26,37 @@
           <div class="row">
             <div class="col-md-7 col-sm-7">
               {% if err_msg %}
-              <div class = "alert alert-danger">
-                  {{ err_msg }}
-              </div>
+              <div class="alert alert-danger">{{ err_msg }}</div>
               {% endif %}
-              <form class="form-horizontal form-without-legend" role="form" method="post">
+              <form
+                class="form-horizontal form-without-legend"
+                role="form"
+                method="post"
+              >
                 <div class="form-group">
-                  <label for="email" class="col-lg-4 control-label">Username<span class="require">*</span></label>
+                  <label for="email" class="col-lg-4 control-label"
+                    >Username<span class="require">*</span></label
+                  >
                   <div class="col-lg-8">
-                    <input type="text" class="form-control" id="usrname" name = "username">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="usrname"
+                      name="username"
+                    />
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="password" class="col-lg-4 control-label">Password<span class="require">*</span></label>
+                  <label for="password" class="col-lg-4 control-label"
+                    >Password<span class="require">*</span></label
+                  >
                   <div class="col-lg-8">
-                    <input type="password" class="form-control" id="password" name = "password">
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="password"
+                      name="password"
+                    />
                   </div>
                 </div>
                 <div class="row">
@@ -47,8 +65,18 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-lg-8 col-md-offset-4 padding-left-0 padding-top-20">
+                  <div
+                    class="col-lg-8 col-md-offset-4 padding-left-0 padding-top-20"
+                  >
                     <button type="submit" class="btn btn-primary">Login</button>
+                  </div>
+                </div>
+                <div class="row">
+                  <div
+                    class="col-lg-8 col-md-offset-4 padding-left-0 padding-top-20"
+                  >
+                    <button style="background: #4285f4;" type="submit" class="btn btn-primary"><a style="text-decoration: none; color:white;">
+                    <img style="max-width: 30px;" src="{{ url_for('static', filename = 'images/google.png') }}"/>Login With GOOGLE</a></button>
                   </div>
                 </div>
               </form>

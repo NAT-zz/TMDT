@@ -6,12 +6,8 @@ from sqlalchemy import (Boolean, Column, DateTime, Float, ForeignKey, Integer,
 from sqlalchemy.orm import backref, relationship
 import enum
 from flask_login import UserMixin
-from sqlalchemy.sql.base import InPlaceGenerative
 
 from sqlalchemy.sql.expression import column, null, true
-from sqlalchemy.sql.traversals import COMPARE_FAILED
-from sqlalchemy.sql.visitors import CloningExternalTraversal
-from sqlalchemy.util.langhelpers import monkeypatch_proxied_specials
 
 from __init__ import db
 class MyRole(enum.Enum):

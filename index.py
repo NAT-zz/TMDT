@@ -1,3 +1,5 @@
+import base64
+import json
 import re
 from threading import currentThread
 from flask import render_template, request, redirect, session, jsonify
@@ -13,6 +15,8 @@ import hashlib
 import math
 import cloudinary
 import cloudinary.uploader
+from momo import MoMo
+from paypal import CaptureOrder, CreateOrder
 
 #current user
 @my_login.user_loader
@@ -311,6 +315,30 @@ def checkout():
         shipping = utils.get_allshipping()
         return render_template("shop-checkout.html", allship = shipping)
     return redirect("/")
+
+@app.route("/pay-with-momo")
+def pay_with_momo():
+    data = MoMo().payment_order()
+    return redirect(data['payUrl'])
+
+@app.route("/momo/payment-result")
+def payment_result():
+    return redirect("/user-checkout")
+
+@app.route('/api/create-paypal-transaction', methods=['post'])
+def create_paypal_transaction():
+    resp = CreateOrder().create_order(debug=True)
+    return jsonify({"id": resp.result.id})
+
+@app.route('/api/capture-paypal-transaction', methods=['post'])
+def capture_paypal_transaction():
+    order_id = request.json['orderID']
+    resp = CaptureOrder().capture_order(order_id)
+    status_code = resp.status_code
+    return jsonify({
+        "error_code": status_code
+    })
+   
 
 @app.route("/") 
 def home():

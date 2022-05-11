@@ -77,8 +77,12 @@
                       </div>
                       <div class="radio-list">
                         <label>
-                          <input type="radio" name="paymentmethod"> Pay With Credit Cart
+                          <input type="radio" name="paymentmethod"> Pay Online
                         </label>
+                        <div style="display: flex;">
+                          {% include 'layout/payment/momo.html' %}
+                          {% include 'layout/payment/paypal.html' %}
+                        </div>
                       </div>
                       <button class="btn btn-primary  pull-right" type="submit" id="button-payment-method" data-toggle="collapse" data-parent="#checkout-page" data-target="#confirm-content">Continue</button>
                     </div>

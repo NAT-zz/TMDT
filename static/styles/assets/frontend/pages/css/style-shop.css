@@ -651,6 +651,9 @@ Header and header elements
 .radio-list > label {
     display: block;
 }
+.radio-list > div > div{
+	opacity: 0.3;
+}
 
 /* compare goods */
 .compare-goods tr:first-child td.compare-info,
