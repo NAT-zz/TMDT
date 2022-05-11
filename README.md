@@ -1,4 +1,4 @@
 - Payment method ??
 - Login method (google, facebook,...)??
 - Send mail after payment ??
-- Change background
+- Custom background
