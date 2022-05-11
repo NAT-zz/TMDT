@@ -1,5 +1,4 @@
-- Search filter
-
 - Payment method ??
-- Login method ??
+- Login method (google, facebook,...)??
 - Send mail after payment ??
+- Change background
