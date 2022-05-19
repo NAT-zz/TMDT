@@ -1,9 +1,11 @@
-from math import prod
-
+import random
+import string
 from sqlalchemy.sql.functions import cume_dist, user
 from models import*
-from __init__ import app, db
+from __init__ import app, db,  mail, s
 from flask_login import current_user
+from flask import url_for, abort
+from flask_mail import Message
 import hashlib
 
 def get_all_brands():
@@ -56,19 +58,58 @@ def get_product(kw=None, brand_id=None, page = None, sort = None):
 def add_user(fullname, username, phone, email, password): 
     get_user = Users.query.filter(Users.username == username).all()
     if not get_user:
-        user = Users(name = fullname, 
+        user = Users(name = fullname,
+                    active = 0, 
                     username = username, 
                     password = password,
                     phone = phone,
                     email = email)
         db.session.add(user)
         try:
-            db.session.commit()
-            return True      
+            if email_verification(email):
+                db.session.commit()
+                return True
+            return False      
         except:
             return False
     else:
         return False
+
+def email_verification(email):
+    try:
+        token = s.dumps(email, salt='email-verification')
+        link = url_for('complete_registration', token=token, _external=True)
+        msg = Message('E-mail Verification',
+                      recipients=[email],
+                      html=f"<div>please click on the link below to complete the verification:"
+                           f"<br/>{link}</div>")
+        mail.send(msg)
+        return True
+
+    except Exception as ex:
+        print(ex)
+        return False
+
+def create_password(email, password=None):
+    if password is None:
+        # then create an account for this user
+        password = ''.join(random.choice(string.ascii_letters) for _ in range(8))
+        print(password)
+        # send password to user via Gmail
+        try:
+            msg = Message('Password for Login',
+                          recipients=[email],
+                          html=f"<div>This is your password: <b>{password}</b></div>")
+            with app.open_resource("%s/static/images/product-showcase.jpg" % app.root_path) as logo:
+                msg.attach('laptopUTE.jpg', 'image/jpeg', logo.read())
+            mail.send(msg)
+        except Exception as ex:
+            print(ex)
+            abort(500)
+        
+        return password
+
+
 def change_password(username, oldpassword, newpassword):
     get_user = Users.query.filter(Users.username == username, Users.password==oldpassword).first()
     if get_user:
@@ -180,6 +221,7 @@ def product_stats(from_date = None, to_date = None):
     return  stats.join(ReceiptDetail, ReceiptDetail.product_id==Product.id, isouter = True)\
             .join(Receipt, ReceiptDetail.receitp_id==Receipt.id, isouter = True)\
             .group_by(Product.id, Product.name).all()
+
 #Thêm dữ liệu
 # c = Category('Mobile') 
 # db.session.add(c)

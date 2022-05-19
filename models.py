@@ -17,6 +17,7 @@ class MyRole(enum.Enum):
 class Users (db.Model, UserMixin):
     __tablename__ = "users"
     id = Column(Integer, primary_key= True, autoincrement= True)
+    active = Column(Integer, nullable= False)
     name = Column(String(30), nullable= False)
     join_date = Column(DateTime, default=datetime.now())
     username = Column(String(30), nullable=False, unique= True)
@@ -64,6 +65,8 @@ class Receipt(db.Model):
     __tablename__ = "receipt"
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey(Users.id), nullable=False)
+    # 0: ongoing, 1: draft, 2: successful
+    status = Column(Integer, default=0)
     created_date = Column(DateTime, default=datetime.now())
 
     detail = relationship("ReceiptDetail", backref="receipt", lazy = True)
@@ -99,6 +102,7 @@ if __name__ == '__main__':
 
     #Admin mặc định
     # user = Users(name = "tuannguyen", 
+    #             active = 1,
     #             username = "admin", password = "123", 
     #             phone = "123", email = "tuan@gmail.com", role = "ADMIN")
     # db.session.add(user)
@@ -120,5 +124,5 @@ if __name__ == '__main__':
     # db.session.add(ship5)
     # db.session.add(ship6)
 
-    # db.session.commit()
+    db.session.commit()
 

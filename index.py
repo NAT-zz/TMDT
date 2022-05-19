@@ -1,19 +1,16 @@
-import base64
 import json
-import re
-from threading import currentThread
+import requests
 from flask import render_template, request, redirect, session, jsonify
 from flask_admin.base import Admin
 from sqlalchemy import util
 from sqlalchemy.sql.functions import user
-from __init__ import app, my_login, CART_KEY
+from __init__ import app, my_login, CART_KEY, s, client, GOOGLE_DISCOVERY_URL, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET
 from admin import*
 from models import Users
 from flask_login import login_user, logout_user
 import utils
-import hashlib
 import math
-import cloudinary
+from itsdangerous import SignatureExpired
 import cloudinary.uploader
 from momo import MoMo
 from paypal import CaptureOrder, CreateOrder
@@ -45,16 +42,105 @@ def normaluser_login():
             pwd = request.form.get("password")
 
             user = Users.query.filter(Users.username == username, Users.password == pwd).first()
-
             if user:
-                login_user(user)
-                return redirect(request.args.get("next", "/"))
+                if user.active == 1:
+                    login_user(user)
+                    return redirect(request.args.get("next", "/"))
+                else:
+                    if utils.email_verification(user.email):
+                        err_msg = "Email has been sent!, You need to verify your email first!"
+                    else:
+                        err_msg = "The system has some errors!. PLease try later"
             else:
                 err_msg = "Incorrect Username or Password"
 
         return render_template("page-login.html", err_msg=err_msg)
     return redirect("/")
     
+def get_google_provider_cfg():
+    return requests.get(GOOGLE_DISCOVERY_URL).json()
+
+@app.route("/user-login/google")
+def loginWithGoogle():
+    # Find out what URL to hit for Google login
+    google_provider_cfg = get_google_provider_cfg()
+    authorization_endpoint = google_provider_cfg["authorization_endpoint"]
+
+    # Use library to construct the request for Google login and provide
+    # scopes that let you retrieve user's profile from Google
+    request_uri = client.prepare_request_uri(
+        authorization_endpoint,
+        redirect_uri=request.base_url + "/callback",
+        scope=["openid", "email", "profile"],
+    )
+    return redirect(request_uri)
+
+
+@app.route("/user-login/google/callback")
+def callback():
+    # Get authorization code Google sent back to you
+    code = request.args.get("code")
+
+    # Find out what URL to hit to get tokens that allow you to ask for
+    # things on behalf of a user
+    google_provider_cfg = get_google_provider_cfg()
+    token_endpoint = google_provider_cfg["token_endpoint"]
+
+    # Prepare and send a request to get tokens! Yay tokens!
+    token_url, headers, body = client.prepare_token_request(
+        token_endpoint,
+        authorization_response=request.url,
+        redirect_url=request.base_url,
+        code=code
+    )
+    token_response = requests.post(
+        token_url,
+        headers=headers,
+        data=body,
+        auth=(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET),
+    )
+
+    # Parse the tokens!
+    client.parse_request_body_response(json.dumps(token_response.json()))
+
+    # Now that you have tokens (yay) let's find and hit the URL
+    # from Google that gives you the user's profile information,
+    # including their Google profile image and email
+    userinfo_endpoint = google_provider_cfg["userinfo_endpoint"]
+    uri, headers, body = client.add_token(userinfo_endpoint)
+    userinfo_response = requests.get(uri, headers=headers, data=body)
+
+    # You want to make sure their email is verified.
+    # The user authenticated with Google, authorized your
+    # app, and now you've verified their email through Google!
+    if userinfo_response.json().get("email_verified"):
+        # unique_id = userinfo_response.json()["sub"]
+        users_email = userinfo_response.json()["email"]
+        picture = userinfo_response.json()["picture"]
+        users_name = userinfo_response.json()["given_name"]
+    else:
+        return "User email not available or not verified by Google.", 400
+
+    if Users.query.filter(Users.email == users_email).first():
+        user = Users.query.filter(Users.email == users_email).first()
+    else:
+        password = utils.create_password(users_email)
+        user = Users(name = users_name,
+                    active = 1, 
+                    username = users_email, 
+                    password = password,
+                    phone="0123456789",
+                    email = users_email)
+        db.session.add(user)
+        db.session.commit()
+
+    # Begin user session by logging the user in
+    login_user(user)
+
+    # Send user back to homepage
+    return redirect("/")
+
+
 @app.route("/user-register", methods=["POST", "GET"])
 def register():
     err_msg = ""
@@ -76,6 +162,19 @@ def register():
             err_msg = "System error"
 
     return render_template("page-reg-page.html", err_msg = err_msg)
+
+@app.route("/user-register/complete")
+def complete_registration():
+    try:
+        token = request.args.get("token")
+        email = s.loads(token, salt="email-verification", max_age=60)  # max_age: milliseconds
+        user = Users.query.filter(Users.email == email).first()
+        user.active = True
+        db.session.add(user)
+        db.session.commit()
+        return "<h1>Your Email has been verified</h1>"
+    except SignatureExpired:
+        return "<h1>The token is expired</h1>"
 
 @app.route("/user-logout")
 def normaluser_logout():
@@ -244,7 +343,7 @@ def update_cart_item():
         try:
             product_id = str(data["product_id"])
             quantity = data['quantity']
-        except IndexError | KeyError as ex:
+        except IndexError or KeyError as ex:
             print(ex)
         else:
             if product_id in cart:

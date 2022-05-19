@@ -1,4 +1,5 @@
-{% extends "layout/base.html" %} {% block content %}
+{% extends "layout/base.html" %} 
+{% block content %}
 <div class="main">
   <div class="container">
     <ul class="breadcrumb">
@@ -75,7 +76,7 @@
                   <div
                     class="col-lg-8 col-md-offset-4 padding-left-0 padding-top-20"
                   >
-                    <button style="background: #4285f4;" type="submit" class="btn btn-primary"><a style="text-decoration: none; color:white;">
+                    <button style="background: #4285f4;" class="btn btn-primary"><a href="/user-login/google" style="text-decoration: none; color:white;">
                     <img style="max-width: 30px;" src="{{ url_for('static', filename = 'images/google.png') }}"/>Login With GOOGLE</a></button>
                   </div>
                 </div>
@@ -89,4 +90,6 @@
     <!-- END SIDEBAR & CONTENT -->
   </div>
 </div>
+{% endblock %}
+{% block footer %}
 {% endblock %}

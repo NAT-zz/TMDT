@@ -1,4 +1,3 @@
-- Payment method ??
-- Login method (google, facebook,...)??
+- Login method (google...)??
 - Send mail after payment ??
-- Custom background
+- Custom background 

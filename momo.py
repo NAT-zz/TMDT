@@ -15,7 +15,7 @@ from __init__ import momo, CART_KEY
 class MoMo:
     def __init__(self):
         cart = session.get(CART_KEY)
-        momo["amount"] = str(int(utils.cart_stats(cart)["total_amount"]) * 100)
+        momo["amount"] = str(int(utils.cart_stats(cart)["total_amount"]) * 1000)
         momo["orderId"] = str(uuid.uuid4())
         momo["requestId"] = str(uuid.uuid4())
         # Additional information for order in the format: {'key': 'value'}
