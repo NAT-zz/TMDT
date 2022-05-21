@@ -12,6 +12,8 @@ body.ecommerce {
 }
 .ecommerce h2 {
 	font-size: 20px;
+	font-weight: 500;
+    text-shadow: 2px 2px 3px rgb(0 0 0 / 35%);
 }
 .ecommerce .content-page h2, 
 .ecommerce .content-page h3, 
@@ -39,6 +41,7 @@ Header and header elements
 ***/
 .ecommerce .header {
 	position: inherit;
+	box-shadow: rgb(0 0 0 / 16%) 0px 3px 15px, rgb(0 0 0 / 23%) 0px 3px 6px;
 }
 .ecommerce .site-logo {
 	padding-top: 28px;

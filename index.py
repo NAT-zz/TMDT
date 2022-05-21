@@ -129,7 +129,6 @@ def callback():
                     active = 1, 
                     username = users_email, 
                     password = password,
-                    phone="0123456789",
                     email = users_email)
         db.session.add(user)
         db.session.commit()

@@ -20,7 +20,7 @@
         <div class="row margin-bottom-40">
           <!-- BEGIN SIDEBAR -->
           <div class="sidebar col-md-3 col-sm-5">
-            <ul class="list-group margin-bottom-25 sidebar-menu">
+            <ul class="list-group sidebar-menu" style="height: 350px;">
               {% for b in brand %}
                 <li class="list-group-item clearfix {{ 'active' if b.id|int == bid|int else ' ' }}"><a href="/product-list?brand-id={{b.id}}"><i class="fa fa-angle-right"></i>{{b.name}} : {{ count_productbybid(b.id) }}</a></li>
               {% endfor %}
@@ -141,4 +141,17 @@
         <!-- END SIDEBAR & CONTENT -->
       </div>
     </div>
+    {% block brand %}
+<!-- BEGIN BRANDS -->
+<div class="brands">
+  <div class="container">
+        <div class="owl-carousel owl-carousel6-brands">
+        {% for b in brand %}
+          <a href="/product-list?brand-id={{b.id}}"><img src="{{ b.icon}}" alt="canon" title="canon" style="width:120px;height:120px;object-fit: contain;padding: 15px;"></a>
+        {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- END BRANDS -->
+{% endblock %}
 {% endblock %}

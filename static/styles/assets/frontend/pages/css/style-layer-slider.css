@@ -104,15 +104,16 @@
 }
 .ls-slide3 .ls-buy {
 	color: #fff;
-	border: solid 5px rgba(55,0,5,0.6);
-	padding: 12px 20px 8px;
-	background: #d11018;
+    border: solid 2px rgb(229 81 35);
+    padding: 12px 20px 8px;
+    background: #fb6d1d;
 	float: left;
 	margin-right: 20px;
 }
 .ls-slide3 .ls-buy:hover {
 	text-decoration: none;
 	color: #fff;
+	opacity: 0.5;
 	border-color: rgba(255,255,255,0.6);
 }
 .ls-slide3 .ls-price {

@@ -1,13 +1,11 @@
-from datetime import date, datetime
-from re import T
+from datetime import datetime
 
-from sqlalchemy import (Boolean, Column, DateTime, Float, ForeignKey, Integer,
-                        String, Enum, func, or_)
-from sqlalchemy.orm import backref, relationship
+from sqlalchemy import (Column, DateTime, Float, ForeignKey, Integer,
+                        String, Enum)
+from sqlalchemy.orm import relationship
 import enum
 from flask_login import UserMixin
 
-from sqlalchemy.sql.expression import column, null, true
 
 from __init__ import db
 class MyRole(enum.Enum):
@@ -22,7 +20,7 @@ class Users (db.Model, UserMixin):
     join_date = Column(DateTime, default=datetime.now())
     username = Column(String(30), nullable=False, unique= True)
     password = Column(String(100), nullable=False)
-    phone = Column(String(12), nullable= False, default="123456")
+    phone = Column(String(12), nullable=True)
     email = Column(String(30), nullable=False, default="nguoidung@gmail.con")
     role =  Column(Enum(MyRole), default = MyRole.USER)
 
@@ -124,5 +122,5 @@ if __name__ == '__main__':
     # db.session.add(ship5)
     # db.session.add(ship6)
 
-    db.session.commit()
+    # db.session.commit()
 

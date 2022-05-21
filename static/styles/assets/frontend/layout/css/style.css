@@ -424,7 +424,7 @@ Header and header elements
 .header {
 	box-shadow: 0 1px 3px #ddd;		
 	background: #fff;
-	border-radius: 0;
+	border-radius: 0 !important;
 	margin-bottom: 23px;
 	z-index: 999;
 	position: relative;
@@ -732,6 +732,8 @@ body.page-header-fixed {
 	width: 274px;
 	margin-top: 0;
 	z-index: 22;
+	box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 9%);
+    border-radius: 3px !important;
 }
 .header-navigation .search-box:after { 
 	top: -8px;
@@ -867,14 +869,19 @@ Sidebar
     position: relative;
     border-radius: 0;
 }
+.sidebar .list-group-item:active{
+	border: 1px solid #ec8722;
+}
 .sidebar .list-group-item:last-child {
 	margin: 0;
 }
 .sidebar a {
 	color: #3E4D5C;
+	transition: 0.2s;
 }
 .sidebar a:hover {
 	color: #E02222;
+	padding: 7px;
 }
  .sidebar-menu a {
 	display: block;
@@ -989,6 +996,13 @@ Brands
     margin-bottom: 41px;
     padding: 0 75px;
     background: #fff;
+	border: 2px solid #ff3d0008;
+	overflow: hidden;
+	border-radius: 60px !important;
+	box-shadow: 0 -10px 10px rgba(249,249,249,0.05),
+                inset 0 -5px 5px rgba(255,255,255,0.05),
+                0 10px 10px rgba(16,16,16,0.3),
+                inset 0 5px 5px rgba(0,0,0,0.3);
 }
 .brands .owl-buttons div {
     position: absolute;
@@ -1004,20 +1018,24 @@ Brands
 }
 .brands .owl-buttons .owl-prev {
     left: 0;
-    background: #fff url(../img/fa-angle-brands.png) no-repeat 18px 18px;
+	height: 100%;
+	padding-right: 15px;
+    background: #fff0  url(../img/fa-angle-brands.png) no-repeat 18px 25px;
     margin-left: 0;
 }
 .brands .owl-buttons .owl-prev:hover {
-    background: #fff url(../img/fa-angle-brands.png) no-repeat 18px -217px;
+    background: #fff0  url(../img/fa-angle-brands.png) no-repeat 18px -210px;
 }
 .brands .owl-buttons .owl-next {
     left: auto;
     right: 0;
-    background: #fff url(../img/fa-angle-brands.png) no-repeat -249px 18px;
+	padding-left: 15px;
+	height: 100%;
+    background: #fff0  url(../img/fa-angle-brands.png) no-repeat -249px 25px;
     margin-right: 0;
 }
 .brands .owl-buttons .owl-next:hover {
-    background: #fff url(../img/fa-angle-brands.png) no-repeat -249px -217px;
+    background: #fff0  url(../img/fa-angle-brands.png) no-repeat -249px -210px;
 }
 
 /***
@@ -1026,7 +1044,7 @@ steps block and steps block elements
 /* shop */
 .steps-block {
 	color: #fff;
-	padding: 30px 0;	
+	padding: 25px 0;	
 }
 .steps-block ::-moz-selection {
   color: #e45000;
@@ -1058,7 +1076,7 @@ steps block and steps block elements
 .steps-block h2,
 .ecommerce .steps-block h2 {
 	color: #fff;
-	font-size: 43px;
+	font-size: 35px;
 	margin: 0;
 	padding: 0;
 	line-height: 1;
@@ -1070,6 +1088,7 @@ steps block and steps block elements
 	margin-bottom: 5px;
 }
 .steps-block em {
+	color: #ffffff80;
 	font: normal 400 13px 'Opan Sans', sans-serif;
 	text-transform: uppercase;
 }
@@ -1386,6 +1405,8 @@ div.content-form-page .checkbox-list {
 	background: #F4F4F4;
 	color: #647484;
 	border-radius: 0;
+	border-bottom-left-radius: unset;
+	border-bottom-right-radius: unset;
 	padding: 5px 15px 4px;
 	border: none !important;
 }
@@ -1692,6 +1713,8 @@ Pre-Footer and pre-footer elements
 	color: #fff;
 	font-size: 12px;
 	padding: 15px 0;
+	border-radius: unset !important;
+    transform: translateY(-10px);
 }
 .footer-light {
 	background: #F9F9F9;

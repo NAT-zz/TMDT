@@ -1,19 +1,5 @@
 <!-- BEGIN PRE-FOOTER -->
 
-{% block brand %}
-<!-- BEGIN BRANDS -->
-<div class="brands">
-  <div class="container">
-        <div class="owl-carousel owl-carousel6-brands">
-        {% for b in brand %}
-          <a href="/product-list?brand-id={{b.id}}"><img src="{{b.icon}}" alt="canon" title="canon" style="width:102px;height:102px;"></a>
-        {% endfor %}
-        </div>
-    </div>
-</div>
-<!-- END BRANDS -->
-{% endblock %}
-
 <!-- BEGIN STEPS -->
 <div class="steps-block steps-block-red">
   <div class="container">
@@ -92,7 +78,7 @@
       <!-- END BOTTOM CONTACTS -->
     </div>
     <hr>
-    <div class="row">
+    <div class="row" style="padding-bottom: 10px;">
       <!-- BEGIN SOCIAL ICONS -->
       <div class="col-md-6 col-sm-6">
         <ul class="social-icons">

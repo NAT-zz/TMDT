@@ -22,9 +22,9 @@ ul,
 code,
 pre,
 li {
-  -webkit-border-radius: 0 !important;
-  -moz-border-radius: 0 !important;
-  border-radius: 0 !important;
+  -webkit-border-radius: 5px !important;
+  -moz-border-radius: 5px !important;
+  border-radius: 5px !important;
 }
 
 /* except below bootstrap elements */
@@ -1782,7 +1782,7 @@ Dropdown Menu
   text-shadow: none;
   padding: 0px;
   margin: 10px  0px 0px 0px;
-  background-color: #fffff;
+  background-color: #ffffff;
   box-shadow: 5px 5px rgba(102, 102, 102, 0.1);
   border: 1px solid #eee;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -4268,11 +4268,11 @@ Social Icons
   text-indent: -9999px;
 }
 .social-icons li > a {
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  -ms-border-radius: 2px;
-  -o-border-radius: 2px;
-  border-radius: 2px;
+  -webkit-border-radius: 3px !important;
+  -moz-border-radius: 3px !important;
+  -ms-border-radius: 3px !important;
+  -o-border-radius: 3px !important;
+  border-radius: 3px !important;
   width: 28px;
   height: 28px;
   display: block;

@@ -173,6 +173,7 @@ a:hover {
 }
 .steps-block-red {
 	background: #e84d1c;
+	transform: translateY(10px);
 }
 .pre-footer .photo-stream img:hover {
 	border-color: #E84D1C;
@@ -366,10 +367,10 @@ a:hover {
 	border-top: solid 2px #ea4c1d;
 }
 .brands .owl-buttons .owl-prev:hover {
-    background-position: 18px -217px;
+    background-position: 18px -211px;
 }
 .brands .owl-buttons .owl-next:hover {
-    background-position: -249px -217px;
+    background-position: -249px -211px;
 }
 .header-navigation ul > li.active > a/*,
 .ecommerce .header-navigation ul > li.active > a*/ {
