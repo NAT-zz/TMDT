@@ -96,10 +96,12 @@ function pay(cityname){
         }).then(function(res){
                 return res.json()
         }).then(function(data){
-            if(data.error_code == 200)
-                location.reload()
+            if(data.error_code == 200){
+                alert("Your order have been SAVED!");
+                location.reload();
+            }
             else 
-                alert("Payment failed")
+                alert("Payment failed");
         })
     }
 }

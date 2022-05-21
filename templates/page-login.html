@@ -7,9 +7,9 @@
       <li class="/user-login">Login</li>
     </ul>
     <!-- BEGIN SIDEBAR & CONTENT -->
-    <div class="row margin-bottom-40">
+    <div class="row margin-bottom-40" style="display: flex; justify-content: center;">
       <!-- BEGIN SIDEBAR -->
-      <div class="sidebar col-md-3 col-sm-3">
+      <!-- <div class="sidebar col-md-3 col-sm-3">
         <ul class="list-group margin-bottom-25 sidebar-menu">
           <li class="list-group-item clearfix">
             <a href="/user-register"
@@ -17,15 +17,15 @@
             >
           </li>
         </ul>
-      </div>
+      </div> -->
       <!-- END SIDEBAR -->
 
       <!-- BEGIN CONTENT -->
       <div class="col-md-9 col-sm-9">
-        <h1>Login User</h1>
         <div class="content-form-page">
-          <div class="row">
-            <div class="col-md-7 col-sm-7">
+          <h1 style="font-weight: bold;margin-top: 15px;margin-left: 25px;">Login User</h1>
+          <div class="row" style="display: flex">
+            <div class="col-md-7 col-sm-7" style="border-right: 1px solid #ccc;">
               {% if err_msg %}
               <div class="alert alert-danger">{{ err_msg }}</div>
               {% endif %}
@@ -72,15 +72,35 @@
                     <button type="submit" class="btn btn-primary">Login</button>
                   </div>
                 </div>
-                <div class="row">
-                  <div
-                    class="col-lg-8 col-md-offset-4 padding-left-0 padding-top-20"
-                  >
-                    <button style="background: #4285f4;" class="btn btn-primary"><a href="/user-login/google" style="text-decoration: none; color:white;">
-                    <img style="max-width: 30px;" src="{{ url_for('static', filename = 'images/google.png') }}"/>Login With GOOGLE</a></button>
+                <div class="row" >
+                  <div class="col-lg-8 col-md-offset-4 padding-left-0">
+                    Don't have an Account?
+                    <a href="/user-register">Register</a>
                   </div>
                 </div>
               </form>
+            </div>
+            <div class="col-md-7 col-sm-7">
+              <div class="row" style="margin-bottom: 10px;">
+                <div style="padding: 0 30px;">
+                  <button style="background: #3b5998;width: 100%; border: 1px solid #121212;" class="btn btn-primary"><a href="/user-login/google" style="letter-spacing: 1px;text-transform: initial;text-decoration: none; color:#f8f8f8;">
+                  <img style="max-height: 30px; margin-right: 8px;
+                  padding: 4px;" src="{{ url_for('static', filename = 'images/fb.png') }}"/>Login With Facebook</a></button>
+                </div>
+              </div>
+              <div class="row" style="margin-bottom: 10px;">
+                <div style="padding: 0 30px;">
+                  <button style="background: #191919;width: 100%; border: 1px solid #121212;" class="btn btn-primary"><a href="/user-login/google" style="letter-spacing: 1px;text-transform: initial;text-decoration: none; color:#f8f8f8;">
+                  <img style="max-height: 30px; margin-right: 8px;
+                  padding: 4px;" src="{{ url_for('static', filename = 'images/apple.png') }}"/>Login With Apple</a></button>
+                </div>
+              </div>
+              <div class="row" style="margin-bottom: 10px;">
+                <div style="padding: 0 30px;">
+                  <button style="background: white;width: 100%; border: 1px solid #121212;" class="btn btn-primary"><a href="/user-login/google" style="letter-spacing: 1px;text-transform: initial;text-decoration: none; color:#6b6b6b;">
+                  <img style="max-height: 30px; margin-right: 8px" src="{{ url_for('static', filename = 'images/google.png') }}"/>Login With Google</a></button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -90,6 +110,4 @@
     <!-- END SIDEBAR & CONTENT -->
   </div>
 </div>
-{% endblock %}
-{% block footer %}
 {% endblock %}

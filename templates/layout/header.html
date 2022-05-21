@@ -27,10 +27,12 @@
           <div class="col-md-6 col-sm-6 additional-nav">
               <ul class="list-unstyled list-inline pull-right">
                 {% if current_user.is_authenticated %}
-                  <li><a href="/user-account">{{current_user.name}}</a></li>
+                  <li style="padding-left: 15px;
+                  font-weight: 900;border-right: solid 2px #e84d1c;border-left: solid 2px #e84d1c;"><a href="/user-account">{{current_user.name}}</a></li>
                   <li><a href="/user-logout">Log Out</a></li>
                 {% else %}
-                  <li><a href="/user-login">Log In</a></li>
+                  <li style="padding-left: 15px;
+                  font-weight: 900;border-right: solid 2px #e84d1c;border-left: solid 2px #e84d1c;"><a href="/user-login">Log In</a></li>
                   <li><a href="/user-register">Registration</a></li>
                 {% endif %}
               </ul>
@@ -44,7 +46,7 @@
 <!-- BEGIN HEADER -->
 <div class="header">
 <div class="container">
-  <a class="site-logo" href="/"><img src="{{ url_for('static', filename = 'styles/assets/frontend/layout/img/logos/logo-shop-red.png') }}" alt="Metronic Shop UI"></a>
+  <a class="site-logo" href="/"><img style="max-width: 112px;" src="{{ url_for('static', filename = 'images/logo_laptopute.png') }}" alt="Metronic Shop UI"></a>
 
   <a href="javascript:void(0);" class="mobi-toggler"><i class="fa fa-bars"></i></a>
 
@@ -56,7 +58,7 @@
       <a href="javascript:void(0);" class="top-cart-info-value">$ <span id = "cart_amount">{{ cart_stats.total_amount }}</span></a>  
     </div>
 
-    <a href="/cart"><i class="fa fa-shopping-cart" style="position: relative;"></i></a>
+    <a href="/cart"><i class="fa fa-shopping-cart" style="position: absolute;top: 1px;right: 0;"></i></a>
               
   </div>
   {% endif %}
@@ -69,7 +71,7 @@
         <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="#">
           New
         </a>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu" style="position: absolute;min-width: 1000px;top: 92px;left: -115px;">
           <li>
             <div class="header-navigation-content">
               <div class="row">

@@ -182,6 +182,7 @@
 <script>
 function confirm_order(){
   var city = document.getElementById('selectedValue').innerHTML;
+  if( city.trim() === "") city = "Hà Nội";
   pay(city);
 }
 </script>

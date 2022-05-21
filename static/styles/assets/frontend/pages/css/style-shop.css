@@ -44,12 +44,13 @@ Header and header elements
 	box-shadow: rgb(0 0 0 / 16%) 0px 3px 15px, rgb(0 0 0 / 23%) 0px 3px 6px;
 }
 .ecommerce .site-logo {
-	padding-top: 28px;
-	padding-bottom: 27px;
+	padding-top: 20px;
+	padding-bottom: 22px;
 }
+
 .ecommerce .reduce-header .site-logo {
-	padding-top: 16px;
-	padding-bottom: 18px;
+	padding-top: 8px;
+	padding-bottom: 10px;
 }
 
 .ecommerce .header-navigation li.menu-search {
@@ -62,12 +63,12 @@ Header and header elements
 /* Navigation */
 .ecommerce .header-navigation {
 	font: 19px "Open Sans", sans-serif;
-	letter-spacing: 1px;
+	letter-spacing: 0;
 	margin: 0;
 }
 .ecommerce .header-navigation > ul > li > a {
 	color: #767f88;
-	padding: 34px 12px 32px;
+	padding: 34px 20px 32px;
 }
 .ecommerce .header-navigation ul > li.active > a,
 .ecommerce .header-navigation ul > li > a:hover,
@@ -154,6 +155,7 @@ Header and header elements
 	float: left;
 	padding: 8px 39px 6px 13px;
 	line-height: 1.2;
+	box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
 }
 .top-cart-info a {
 	color: #595f65;
@@ -331,6 +333,7 @@ Header and header elements
 	padding: 12px 12px 16px;
 	background: #fff;
 	position: relative;
+	box-shadow: rgb(0 0 0 / 15%) 1.95px 1.95px 2.6px;
 }
 .owl-item.active .product-item {
 	margin-right: 10px;
@@ -446,6 +449,7 @@ Header and header elements
 	margin-bottom: 20px;
 	overflow-x: auto;
 	margin-right: 10px;
+	box-shadow: rgb(0 0 0 / 15%) 1.95px 1.95px 2.6px;
 }
 .goods-data table,
 .checkout-page table {
@@ -646,6 +650,7 @@ Header and header elements
 	border-radius: 0;
 	border: none;
 	box-shadow: none;
+	box-shadow: rgb(0 0 0 / 15%) 1.95px 1.95px 2.6px !important;
 }
 .checkout-page .panel-heading {
 	background: none;
@@ -743,6 +748,7 @@ Header and header elements
 .sidebar-filter {
 	background: #fff;
 	padding: 15px 15px 20px;
+	box-shadow: rgb(0 0 0 / 15%) 1.95px 1.95px 2.6px;
 }
 .sidebar-filter h2 {
 	font-size: 18px;
@@ -789,6 +795,7 @@ Header and header elements
 .sidebar-products {
 	background: #fff;
 	padding: 15px 15px 20px;
+	box-shadow: rgb(0 0 0 / 15%) 1.95px 1.95px 2.6px;
 }
 .sidebar-products .item {
 	width: 100%;

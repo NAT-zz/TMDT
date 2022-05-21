@@ -1,12 +1,10 @@
 import random
 import string
-from sqlalchemy.sql.functions import cume_dist, user
 from models import*
 from __init__ import app, db,  mail, s
 from flask_login import current_user
 from flask import url_for, abort
 from flask_mail import Message
-import hashlib
 
 def get_all_brands():
     return Brand.query.all()
@@ -170,6 +168,7 @@ def add_receipt(cart, cityname):
                 ship = Shipping.query.filter(Shipping.cityname == cityname).first()
                 total = sub_total + ship.price
                 order = Order(cityname = cityname, user = current_user, receipt = receipt, price = total)
+                db.session.add(order)
         except Exception as ex:
             print("ERROR: " + str(ex))
         db.session.commit() 

@@ -377,7 +377,7 @@ def delete_cart_item(product_id):
 @app.route("/api/pay/<cityname>", methods = ["POST", "GET"])
 def pay(cityname):
     cart = session.get(CART_KEY)
-        
+
     if cart:
         if utils.add_receipt(cart, cityname = cityname):
             del session[CART_KEY]

@@ -63,7 +63,7 @@ class Receipt(db.Model):
     __tablename__ = "receipt"
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey(Users.id), nullable=False)
-    # 0: ongoing, 1: draft, 2: successful
+    # 0: ongoing ((haven't payed), 1: ongoing payed), 2: draft, 3: successful (payed and recieved)
     status = Column(Integer, default=0)
     created_date = Column(DateTime, default=datetime.now())
 
