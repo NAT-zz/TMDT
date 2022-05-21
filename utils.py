@@ -1,9 +1,10 @@
 import random
 import string
+from sqlalchemy.sql.functions import cume_dist, user
 from models import*
 from __init__ import app, db,  mail, s
 from flask_login import current_user
-from flask import url_for, abort
+from flask import url_for, abort, func
 from flask_mail import Message
 
 def get_all_brands():
