@@ -86,86 +86,90 @@
 
       <!-- BEGIN CONTENT -->
       <div class="col-md-9 col-sm-7">
-        {% for r in receipt %}
-        <div class="goods-page">
-          <div class="goods-data clearfix">
-            <h1>
-              <span>{{ r.created_date }}</span
-              ><span
-                style="text-transform: initial; font-weight: 500; float: right"
-                class="status"
-                >{{r.status}}</span
-              >
-            </h1>
-            <div class="table-wrapper-responsive">
-              <table summary="Shopping cart">
-                <tr>
-                  <th class="goods-page-image">image</th>
-                  <th class="goods-page-description">Product</th>
-                  <th class="goods-page-description">quantity</th>
-                  <th class="goods-page-price" colspan="2">Total</th>
-                </tr>
+        {% if receipt|length == 0 %}
+        <img style="width: 100%;" src="{{ url_for('static', filename = 'images/order_empty.png') }}" alt="order empty"/>
+        {% else %}
+          {% for r in receipt %}
+          <div class="goods-page">
+            <div class="goods-data clearfix">
+              <h1>
+                <span>{{ r.created_date }}</span
+                ><span
+                  style="text-transform: initial; font-weight: 500; float: right"
+                  class="status"
+                  >{{r.status}}</span
+                >
+              </h1>
+              <div class="table-wrapper-responsive">
+                <table summary="Shopping cart">
+                  <tr>
+                    <th class="goods-page-image">image</th>
+                    <th class="goods-page-description">Product</th>
+                    <th class="goods-page-description">quantity</th>
+                    <th class="goods-page-price" colspan="2">Total</th>
+                  </tr>
 
-                {% for d in detail %} {% if d.receitp_id|int == r.id|int %} {%
-                for p in product %} {% if p.id|int == d.product_id|int %}
-                <tr>
-                  <td class="goods-page-image">
-                    <a href="#"
-                      ><img src="{{ p.image }}" alt="Berry Lace Dress"
-                    /></a>
-                  </td>
-                  <td class="goods-page-description">
-                    <h3><a href="#">{{ p.name }}</a></h3>
-                    <p><strong>Chip :</strong> {{ p.chip }}</p>
-                    <p><strong>Ram :</strong> {{ p.ram }} GB</p>
-                  </td>
-                  <td class="goods-page-stock">{{ d.quantity }}</td>
-                  <td class="goods-page-price">
-                    <strong><span>$</span>{{ d.quantity*p.price }}</strong>
-                  </td>
-                </tr>
-                {% endif %} {% endfor %} {% endif %} {% endfor %}
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td style="text-align: end; padding: 0">
-                    <button
-                      style="
-                        width: 50%;
-                        border: none;
-                        outline: none;
-                        color: #fff;
-                        font-weight: 600;
-                        height: 40px;
-                      "
-                      onclick="cancelOrder({{r.id}}, {{r.status}});"
-                      class="btn-action"
+                  {% for d in detail %} {% if d.receitp_id|int == r.id|int %} {%
+                  for p in product %} {% if p.id|int == d.product_id|int %}
+                  <tr>
+                    <td class="goods-page-image">
+                      <a href="#"
+                        ><img src="{{ p.image }}" alt="Berry Lace Dress"
+                      /></a>
+                    </td>
+                    <td class="goods-page-description">
+                      <h3><a href="#">{{ p.name }}</a></h3>
+                      <p><strong>Chip :</strong> {{ p.chip }}</p>
+                      <p><strong>Ram :</strong> {{ p.ram }} GB</p>
+                    </td>
+                    <td class="goods-page-stock">{{ d.quantity }}</td>
+                    <td class="goods-page-price">
+                      <strong><span>$</span>{{ d.quantity*p.price }}</strong>
+                    </td>
+                  </tr>
+                  {% endif %} {% endfor %} {% endif %} {% endfor %}
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td style="text-align: end; padding: 0">
+                      <button
+                        style="
+                          width: 50%;
+                          border: none;
+                          outline: none;
+                          color: #fff;
+                          font-weight: 600;
+                          height: 40px;
+                        "
+                        onclick="cancelOrder({{r.id}}, {{r.status}});"
+                        class="btn-action"
+                      >
+                        Cancel
+                      </button>
+                    </td>
+                  </tr>
+                  <div class="alert alert-warning">
+                    {% for o in order %} {% if o.receipt_id|int == r.id|int %}
+                    <span style="font-size: medium">To: </span>
+                    <span style="font-size: medium" class="text-danger">
+                      {{ o.cityname }}</span
                     >
-                      Cancel
-                    </button>
-                  </td>
-                </tr>
-                <div class="alert alert-warning">
-                  {% for o in order %} {% if o.receipt_id|int == r.id|int %}
-                  <span style="font-size: medium">To: </span>
-                  <span style="font-size: medium" class="text-danger">
-                    {{ o.cityname }}</span
-                  >
-                  <span
-                    style="font-size: medium; float: right; font-weight: bold"
-                    >Total Amount:
-                    <span style="font-size: medium" class="text-danger"
-                      >${{ o.price }}</span
-                    >
-                  </span>
-                  {% endif %} {% endfor %}
-                </div>
-              </table>
+                    <span
+                      style="font-size: medium; float: right; font-weight: bold"
+                      >Total Amount:
+                      <span style="font-size: medium" class="text-danger"
+                        >${{ o.price }}</span
+                      >
+                    </span>
+                    {% endif %} {% endfor %}
+                  </div>
+                </table>
+              </div>
             </div>
           </div>
-        </div>
-        {% endfor %}
+          {% endfor %}
+        {% endif %}
       </div>
       <!-- END CONTENT -->
     </div>

@@ -101,6 +101,7 @@ def create_password(email, password=None):
                           html=f"<div>This is your password: <b>{password}</b></div>")
             with app.open_resource("%s/static/images/product-showcase.jpg" % app.root_path) as logo:
                 msg.attach('laptopUTE.jpg', 'image/jpeg', logo.read())
+
             mail.send(msg)
         except Exception as ex:
             print(ex)

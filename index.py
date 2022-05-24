@@ -1,9 +1,6 @@
 import json
 import requests
 from flask import render_template, request, redirect, session, jsonify
-from flask_admin.base import Admin
-from sqlalchemy import util
-from sqlalchemy.sql.functions import user
 from __init__ import app, my_login, CART_KEY, s, client, GOOGLE_DISCOVERY_URL, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET
 from admin import*
 from models import Users
@@ -11,7 +8,6 @@ from flask_login import login_user, logout_user
 import utils
 import math
 from itsdangerous import SignatureExpired
-import cloudinary.uploader
 from momo import MoMo
 from paypal import CaptureOrder, CreateOrder
 
@@ -121,14 +117,16 @@ def callback():
     else:
         return "User email not available or not verified by Google.", 400
 
-    if Users.query.filter(Users.email == users_email).first():
-        user = Users.query.filter(Users.email == users_email).first()
-    else:
+    user = Users.query.filter(Users.email == users_email).first()
+
+    if not user:
         password = utils.create_password(users_email)
+
         user = Users(name = users_name,
                     active = 1, 
                     username = users_email, 
                     password = password,
+                    phone = "0123456789",
                     email = users_email)
         db.session.add(user)
         db.session.commit()
