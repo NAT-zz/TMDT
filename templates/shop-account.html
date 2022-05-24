@@ -1,29 +1,63 @@
-{% extends "layout/base.html" %}
-
-{% block content %}
+{% extends "layout/base.html" %} {% block content %}
 <div class="main">
   <div class="container">
     <ul class="breadcrumb">
-        <li><a href="/">Home</a></li>
-        <li><a href="/product-list">Store</a></li>
-        <li class="active">My Account Page</li>
+      <li><a href="/">Home</a></li>
+      <li><a href="/product-list">Store</a></li>
+      <li class="active">My Account Page</li>
     </ul>
     <!-- BEGIN SIDEBAR & CONTENT -->
     <div class="row margin-bottom-40">
       <!-- BEGIN SIDEBAR -->
+      <div class="sidebar col-md-3 col-sm-3">
+        <ul class="list-group margin-bottom-25 sidebar-menu">
+          <li class="list-group-item clearfix" style="height: 100px; text-transform: initial;">
+            <div style="
+                                display: flex;
+                                justify-content: start;
+                                align-items: center;
+                                padding-bottom: 15px;
+                                border-bottom: 1px solid #dbdbdb;">
+                                    <img style="max-width: 60px;border-radius: 50%;" src="{{ url_for('static', filename = 'images/user.png') }}" alt="user">
+                                    <div style=" margin-left: 15px;">
+                                        <p style="padding: unset;font-weight: 600; margin-bottom: 2px;">{{current_user.name}}</p>
+                                        <span style="opacity: 0.5;"><span style="color: #556080;"><i class="fa fa-pencil"></i></span> Change info</span>
+                                    </div>
+                                </div>
+          </li>
+          <li class="list-group-item clearfix" style="height: 120px;">
+            <a href="" style="pointer-events: none; font-weight: bold;"
+              ><i class="fa fa-user" style="margin-right: 5px;"></i>My Account</a>
+              <ul style="list-style: none;">
+                <li style="padding: 5px 0;">
+                  <a style="text-transform: initial;" href="/user-edit-account">Profile</a>
+                </li>
+                <li><a style="text-transform: initial;" href="/user-change-password">Change password</a></li>
+              </ul>
+          </li>
+          <li class="list-group-item clearfix" style="height: 70px;">
+            <a href="" style="pointer-events: none; font-weight: bold;"
+              ><i class="fa fa-inbox" style="margin-right: 5px;"></i>My Orders</a>
+              <ul style="list-style: none;">
+                <li style="padding: 5px 0;"><a style="text-transform: initial;" href="/orders">Orders history</a></li>
+              </ul>
+          </li>
+        </ul>
+      </div>
       <!-- END SIDEBAR -->
 
       <!-- BEGIN CONTENT -->
       <div class="col-md-9 col-sm-7">
-        <h1>My Account Page</h1>
         <div class="content-page">
+          <h1>My Account Page</h1>
           <h3>My Account</h3>
           <ul>
-            <li><a href="/user-edit-account">Edit your account information</a></li>
+            <li>
+              <a href="/user-edit-account">Edit your account information</a>
+            </li>
             <li><a href="/user-change-password">Change your password</a></li>
-            <li><a href="/cart">Modify your cart</a></li>
           </ul>
-          <hr>
+          <hr />
 
           <h3>My Orders</h3>
           <ul>
@@ -36,7 +70,4 @@
     <!-- END SIDEBAR & CONTENT -->
   </div>
 </div>
-{% endblock %}
-
-{% block footer %}
 {% endblock %}

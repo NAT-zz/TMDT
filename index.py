@@ -180,12 +180,6 @@ def normaluser_logout():
     logout_user()
     return redirect("/user-login")
 
-@app.route("/user-account")
-def normaluser_account():
-    if current_user.is_authenticated:
-        return render_template("shop-account.html")
-    return redirect("/")
-
 @app.route("/user-forget-password")
 def normaluer_forget_password():
     if not current_user.is_authenticated:
@@ -387,6 +381,62 @@ def pay(cityname):
     return jsonify({
         "error_code": 404
     })
+
+@app.route("/api/cancel-order", methods=["POST"])
+def cancel_order():
+    try:
+        order_id = request.json["order_id"]
+        order = Receipt.query.filter(Receipt.id == order_id).first()
+        order.status = 3 # cancel
+        db.session.add(order)
+        db.session.commit()
+        return jsonify({
+            "error_code": 200
+        })
+    except Exception as ex:
+        print(ex)
+        return jsonify({
+            "error_code": 404
+        }) 
+    
+@app.route("/api/reorder", methods=["POST"])
+def reorder():
+    try:
+        cart = session.get(CART_KEY)
+        if not cart:
+            cart = {}
+
+        order_id = request.json["order_id"]
+        order = Receipt.query.filter(Receipt.id == order_id).first()
+
+        for item in order.detail:
+            product_id = str(item.product.id)
+
+            if product_id in cart: #sản phẩm đã từng bỏ vào giỏ
+                p = cart[product_id]
+                p['quantity'] = p['quantity'] + item.quantity
+            else:
+                cart[product_id] = { 
+                    "product_id" : product_id,
+                    "product_name" : item.product.name,
+                    "product_price" : item.product.price,
+                    "product_image" : item.product.image,
+                    "product_chip" : item.product.chip,
+                    "product_ram" : item.product.ram,
+                    "quantity" : item.quantity
+                }
+
+        session[CART_KEY] = cart
+
+        return jsonify({
+            **(utils.cart_stats(cart)), # spread operator
+            "error_code": 200
+        })
+    except Exception as ex:
+        print(ex)
+        return jsonify({
+            "error_code": 404
+        }) 
 
 @app.route("/orders")
 def history_orders():
