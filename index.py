@@ -385,7 +385,7 @@ def cancel_order():
     try:
         order_id = request.json["order_id"]
         order = Receipt.query.filter(Receipt.id == order_id).first()
-        order.status = 3 # cancel
+        order.status = 2 # cancel
         db.session.add(order)
         db.session.commit()
         return jsonify({
